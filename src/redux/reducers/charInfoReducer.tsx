@@ -1,13 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { Character } from '../../shared/types';
 
 interface CharacterState {
-    currentInfo: Character,
-    charType: String,
-    charCarousel:any[]
+    currentChar: Character,
 }
-const initialState = {
-  currentInfo:{
+const initialState:CharacterState = {
+  currentChar:{
     id:1,
     photo:'../src/assets/img/Gardener.png',
     portrait:'../src/assets/img/Gardener-port.png',
@@ -20,28 +18,19 @@ const initialState = {
     likes:'Canaries',
     role:"sur"
   },
-  charType: 'sur',
-  charCarousel: [],
     
-} as CharacterState
+}
 
 const currentChar = createSlice({
   name: "charInfo",
   initialState,
   reducers: {
-    getCharInfo: (state,action) =>{
-      state.currentInfo = action.payload
-    },
-    setCharType: (state,action)=>{
-      state.charType = action.payload
-    },
-    setCharArr: (state,action)=>{
-      state.charCarousel = action.payload
+    getCharInfo: (state,action:PayloadAction<Character>) =>{
+      state.currentChar = action.payload
     }
-
   }
 });
 
-export const {getCharInfo,setCharType,setCharArr} = currentChar.actions
+export const {getCharInfo} = currentChar.actions
 
 export default currentChar.reducer

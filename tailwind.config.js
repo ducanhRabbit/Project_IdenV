@@ -1,28 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 
-module.exports = {
+export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors:{
-      white: '#c3cfd8'
-    },
+    // colors: {
+    //   white: "#c3cfd8",
+    // },
     fontFamily: {
-      witch: ["Witch-Party"],
+      witch: ["Griffy"],
     },
     extend: {
-      backgroundPosition: {
-        gallery70: "70%",
-        gallery45: "45%",
-        galleryTopCent: "50% 0",
-      },
-      gridTemplateColumns: {
-        236: "repeat(auto-fill,minmax(236px,1fr))",
-      },
-      gridAutoRows: {
-        10: "10px",
-      },
-      gridRowEnd: {
-        small: "span 26",
+      colors:{
+        "primary":"#cc0000",
+        "primary-darken":"#ac0000",
+        "marine": "#0096c7",
+        "grey-100": "#bcbcbc"
       },
       keyframes: {
         bouncing: {
@@ -49,7 +41,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
+
 };
-
-
