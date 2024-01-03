@@ -1,0 +1,60 @@
+.swiper-slide {
+  background-color: unset;
+}
+
+.swiper-container {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100vh;
+  min-height: 0;
+  min-width: 0;
+}
+
+.swiper-container-vertical .swiper-wrapper {
+  position: absolute;
+}
+.swiper-button-disabled {
+  opacity: 0.25;
+}
+
+@media screen and (min-width: 1024px) {
+  .swiper-slide-active .gallery-tab .tab-text,
+  .swiper-slide-duplicate-active .gallery-tab .tab-text {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .swiper-slide-active .gallery-tab .tab-text,
+  .swiper-slide-duplicate-active .gallery-tab .tab-text {
+    width: 300px;
+    opacity: 1;
+  }
+}
+
+.swiper-slide-active,
+.swiper-slide-duplicate-active{
+  position: relative;
+  z-index: 10;
+}
+
+.swiper-slide-active .gallery-tab .nav-img,
+.swiper-slide-duplicate-active .gallery-tab .nav-img {
+  scale: 1.2;
+  z-index: 50;
+  position: relative;
+}
+
+.swiper-slide-active .gallery-tab .nav-img::after,
+.swiper-slide-duplicate-active .gallery-tab .nav-img::after,
+.swiper-slide-active .gallery-tab .nav-img::before,
+.swiper-slide-duplicate-active .gallery-tab .nav-img::before {
+  width: 30%;
+  transition: ease-in-out 300ms;
+}
+
+.swiper-slide-next .gallery-tab .nav-img,
+.swiper-slide-duplicate-next .gallery-tab .nav-img {
+  z-index: 0;
+}
