@@ -72,7 +72,7 @@ function SignIn({ setShowSignIn }:SignInProps) {
       )}
       <div className="absolute px-4 py-8 font-witch  text-white top-1/2 -translate-y-1/2 w-full max-w-xl left-1/2 -translate-x-1/2">
         <div className="flex flex-col items-center mb-4">
-          <h1 className="text-6xl text-center mb-4">Sign in to Identity V</h1>
+          <h1 className="text-6xl text-center mb-4">Sign in to Identity <span className="text-primary">V</span></h1>
           <div className="flex gap-4 mb-2">
             <button
               onClick={handleSignInWithGoogle}

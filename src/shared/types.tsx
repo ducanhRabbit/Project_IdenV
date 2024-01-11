@@ -12,24 +12,43 @@ export interface Character {
   role: string;
 }
 export interface User {
-  firstName: String;
-  lastName: String;
-  userName: String;
-  story: String;
-  email: String;
-  passWord: String;
-  uid: String;
-  photo: String;
-  followers: String[];
-  following: String[];
+  _id:string
+  firstName: string;
+  lastName: string;
+  userName: string;
+  story: string;
+  email: string;
+  passWord: string;
+  uid: string;
+  photo: string;
+  followers: string[];
+  following: string[];
   save: any[];
-  token: String;
+  token: string;
+}
+
+export interface Inspiration{
+  _id:string,
+  title:string,
+  plainTitle:string,
+  description:string,
+  artworkURL:string,
+  heightImg:number,
+  widthImg:number,
+  isLike:boolean,
+  commentPermission:boolean,
+  likes:User[],
+  postedBy:User,
+  comments:[],
+  createAt:string,
+  updatedAt:string
 }
 
 export interface NavMenu {
-  tag: String;
-  link?: String;
-  subMenu: NavMenu[] | null;
+  tag: string;
+  link?: string;
+  subMenu?: NavMenu[] | null;
+  action?:()=>void
 }
 
 export interface SignInForm {

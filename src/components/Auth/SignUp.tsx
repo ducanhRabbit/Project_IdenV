@@ -8,15 +8,12 @@ import {
   AiOutlineEyeInvisible,
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import {
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Triangle } from "react-loader-spinner";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import http from "../../axios/axios";
 import ModalNotification from "./AuthNotification";
-
 
 import signinWithGoogle from "./SigninWithGoogle";
 import { auth } from "../../firebase/fireBase";
@@ -25,18 +22,18 @@ import { SignUpForm } from "../../shared/types";
 import getRandomImage from "../shared/Util";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 
-interface SignUpProps{
-  setShowSignIn:React.Dispatch<React.SetStateAction<boolean>>
+interface SignUpProps {
+  setShowSignIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function SignUp({ setShowSignIn }:SignUpProps) {
+function SignUp({ setShowSignIn }: SignUpProps) {
   const dispatch = useAppDispatch();
   const [hidePassword, setHidePassword] = useState(true);
   const visiblePassword = () => {
     setHidePassword(!hidePassword);
   };
 
-  const signUpHandler = async (values:SignUpForm) => {
+  const signUpHandler = async (values: SignUpForm) => {
     setIsLoading(true);
     try {
       const user = (
@@ -64,7 +61,7 @@ function SignUp({ setShowSignIn }:SignUpProps) {
       };
       localStorage.setItem("user", JSON.stringify(currentUser));
       dispatch(setCurrentUser(signIn.data));
-    } catch (err:any) {
+    } catch (err: any) {
       setError(err.code);
     }
     setIsLoading(false);
@@ -89,11 +86,13 @@ function SignUp({ setShowSignIn }:SignUpProps) {
       <div className="absolute px-4 py-8 font-witch  text-white top-1/2 -translate-y-1/2 w-full max-w-xl left-1/2 -translate-x-1/2">
         <div className="flex flex-col items-center mb-4">
           <h1 className="text-6xl text-center mb-4">
-            Sign up to Identity <span>V</span>{" "}
+            Sign up to Identity <span className="text-primary">V</span>{" "}
           </h1>
           <div className="flex gap-4 mb-2">
             <button
-              onClick={()=>{signinWithGoogle(dispatch, setCurrentUser)}}
+              onClick={() => {
+                signinWithGoogle(dispatch, setCurrentUser);
+              }}
               className="rounded-full p-3 bg-white"
             >
               <FcGoogle size={20} />
