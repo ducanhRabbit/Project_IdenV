@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   /* line-height: 1.5;
   font-weight: 400;
 
@@ -31,9 +31,9 @@ html {
 }
 
 @layer components {
-  .primary-scrollbar {
+  /* .primary-scrollbar {
     @apply scrollbar-thin scrollbar-thumb-[#585858] scrollbar-track-[#ebebeb] scrollbar-thumb-rounded-full scrollbar-track-rounded-full;
-  }
+  } */
 
   .btn-community {
     @apply text-2xl p-2 rounded-full relative ease-in-out duration-500 after:content-[''] after:absolute after:rounded-full after:border after:border-white  after:w-full after:h-full after:right-0 after:top-0;

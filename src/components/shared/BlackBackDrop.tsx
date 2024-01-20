@@ -1,8 +1,8 @@
 import React from "react";
 
 interface BlackBackdropProps{
-  className:string
-  children: React.ReactNode
+  className?:string
+  children?: React.ReactNode
   onCloseBlackBackdrop: ()=> void
 }
 

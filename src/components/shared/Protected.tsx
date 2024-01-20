@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 interface ProtectedProps {
-  children: React.ReactDOM
+  children: React.ReactNode
 }
 const Protected = ({
   children,

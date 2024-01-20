@@ -6,20 +6,17 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { BsTrashFill } from "react-icons/bs";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import useScreenSize from "../../hook/useScreenSize";
-import { Inspiration } from "../../shared/types";
+import { ConfirmWarnState, Inspiration } from "../../shared/types";
 import React from "react";
 import { useAppSelector } from "../../redux/hook";
 
-interface ConfirmWarnState {
-  type: string;
-  data: string;
-}
+
 
 interface CardImgProps {
   content: Inspiration;
   indexPage: number;
   tab: string;
-  setActiveConfirmWarn?: React.Dispatch<React.SetStateAction<ConfirmWarnState>>;
+  setActiveConfirmWarn?: React.Dispatch<React.SetStateAction<ConfirmWarnState | null>>;
 }
 
 function CardImg({
