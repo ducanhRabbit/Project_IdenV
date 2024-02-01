@@ -1,0 +1,55 @@
+.title-input{
+    width: 100%;
+    z-index: 1;
+    position: relative;
+    overflow-y: auto;
+    font-size: 2.25rem;
+    max-height: 150px;
+    line-height: 1.2;
+}
+
+.title-input::-webkit-scrollbar-thumb{
+    background-color: #585858;
+    border-radius: 9999px;
+}
+.title-input::-webkit-scrollbar-track{
+    background-color: #ebebeb;
+    border-radius: 9999px;
+}
+
+.title-input::-webkit-scrollbar{
+    display: none;
+}
+
+.descr-input{
+    width: 100%;
+    z-index: 1;
+    position: relative;
+    overflow: auto;
+
+    font-size: 1rem;
+    max-height: 100px;
+}
+
+.descr-input::-webkit-scrollbar-thumb{
+    background-color: #585858;
+    border-radius: 9999px;
+}
+.descr-input::-webkit-scrollbar-track{
+    background-color: #ebebeb;
+    border-radius: 9999px;
+}
+
+.descr-input::-webkit-scrollbar{
+    width: 8px;
+}
+.characters-limit{
+    position: absolute;
+    right: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .descr-input{
+        font-size: 1.3rem;
+    }
+}

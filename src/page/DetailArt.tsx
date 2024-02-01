@@ -17,7 +17,7 @@ import {
   CLEAR_EDITOR_COMMAND,
   LexicalEditor,
 } from "lexical";
-import MyLexicalEditor from "../components/LexicalEditor/MyLexicalEditor"
+import MyLexicalEditor from "../components/LexicalEditor/MyLexicalEditor";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -29,7 +29,7 @@ import { Menu, Transition } from "@headlessui/react";
 import useScreenSize from "../hook/useScreenSize";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import BlackBackdrop from "../components/shared/BlackBackDrop";
-import { ActiveComment, ActiveEmoji, Inspiration, User } from "../shared/types";
+import { ActiveComment, ActiveEmoji, Inspiration } from "../shared/types";
 import SetInitialTextPlugin from "../components/LexicalEditor/Plugins/SetInitialTextPlugin";
 import CommentPost from "../components/ArtMuseum/DetailArt/CommentPost";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -41,7 +41,10 @@ function DetailArt() {
   const ref = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [height, setHeight] = useState(0);
-  const [showEmojiPicker, setShowEmojiPicker] = useState<ActiveEmoji>({active:false,type:""});
+  const [showEmojiPicker, setShowEmojiPicker] = useState<ActiveEmoji>({
+    active: false,
+    type: "",
+  });
   const { currentUser } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const { isMobile } = useScreenSize();
@@ -51,12 +54,13 @@ function DetailArt() {
     refetchOnWindowFocus: false,
   });
   const navigate = useNavigate();
-  const getDetailInspiration = async (idDetail:string|undefined):Promise<AxiosResponse<Inspiration>|undefined>=> {
-      const res = await http.get(`/inspiration/${idDetail}`);
-      return res;
+  const getDetailInspiration = async (
+    idDetail: string | undefined
+  ): Promise<AxiosResponse<Inspiration> | undefined> => {
+    const res = await http.get(`/inspiration/${idDetail}`);
+    return res;
   };
-  console.log("rerender");
-  const followAPI = async (idUser:string) => {
+  const followAPI = async (idUser: string) => {
     const res = await http.post(`/user/follow/${idUser}`);
     return res;
   };
@@ -64,7 +68,7 @@ function DetailArt() {
     mutationKey: ["followUser"],
     mutationFn: followAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:["detail"]});
+      queryClient.invalidateQueries({ queryKey: ["detail"] });
     },
   });
   const editorRef = useRef<LexicalEditor | null>(null);
@@ -75,9 +79,8 @@ function DetailArt() {
     if (imgRef.current && imgRef.current.offsetHeight !== height) {
       setHeight(imgRef.current.offsetHeight);
     }
-    // console.log(imgRef.current.offsetHeight)
     // Auto scroll to lastest comment
-    if(commentAreaRef.current){
+    if (commentAreaRef.current) {
       commentAreaRef.current.scrollTop = commentAreaRef.current.scrollHeight;
     }
   }, [detailData, location.pathname]);
@@ -94,7 +97,7 @@ function DetailArt() {
   });
   const saveMutation = useMutation({
     mutationKey: ["savePost"],
-    mutationFn: (postId:string) => {
+    mutationFn: (postId: string) => {
       return http.put(`user/save/${postId}`);
     },
     onSuccess: async () => {
@@ -108,11 +111,10 @@ function DetailArt() {
 
   const isOwner = currentUser?._id === detailData?.data.postedBy._id;
 
-  const booLike = detailData?.data.likes.some((like:User) => {
+  const booLike = detailData?.data.likes.some((like) => {
     return like._id == currentUser?._id;
   });
-  // const debounceLikeBtn = useDebounce(handleLikePost, 300);
-  const handleLexical = async() => {
+  const handleLexical = async () => {
     if (editorRef.current !== undefined) {
       if (editorRef.current !== null) {
         const latestEditorState = editorRef.current.getEditorState();
@@ -140,15 +142,17 @@ function DetailArt() {
       navigate("/artMuseum");
     },
   });
-  const handleEmojiSelect = (emoji:any) => {
-    if(editorRef.current){
+  const handleEmojiSelect = (emoji: any) => {
+    if (editorRef.current) {
       editorRef.current.update(() => {
         const node = $createTextNode(emoji.native);
         $insertNodes([node]);
       });
     }
   };
-  const [activeComment, setActiveComment] = useState<ActiveComment|null>(null);
+  const [activeComment, setActiveComment] = useState<ActiveComment | null>(
+    null
+  );
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -161,7 +165,7 @@ function DetailArt() {
       <ToastContainer />
       {activeEdit && (
         <>
-          <div className="fixed  top-1/2 left-1/2 w-[calc(100%_-_16px)] bg-white font-witch md:w-[60%] h-[90vh] rounded-xl -translate-x-1/2 -translate-y-1/2 z-[111]">
+          <div className="fixed   top-1/2 left-1/2 w-[calc(100%_-_16px)] bg-white font-witch md:w-[60%] h-[90vh] rounded-xl -translate-x-1/2 -translate-y-1/2 z-[111]">
             <EditInspirationModal setActiveEdit={setActiveEdit} />
           </div>
           <BlackBackdrop
@@ -175,42 +179,40 @@ function DetailArt() {
       )}
       {activeDelete && (
         <>
-          <div className="fixed z-50 top-1/2 left-1/2  bg-white font-witch min-w-[500px] w-[60%] rounded-xl -translate-x-1/2 -translate-y-1/2">
-            <div className="confirm-wrapper text-center text-[#111] z-50 fixed top-1/2 left-1/2 bg-white font-witch min-w-[500px] rounded-xl p-6 -translate-x-1/2 -translate-y-1/2">
-              <div className="text-3xl font-bold">Are you sure?</div>
-              <div className="my-8">
-                Once you delete this Inspiration, you can't{" "}
-                <span className="text-[#cc0000] font-semibold">undo</span> it.
-              </div>
-              <div className="control flex justify-center gap-2">
-                <button
-                  onClick={() => {
-                    setActiveDelete(false);
-                  }}
-                  className="secondary-btn px-4 py-2"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    deleteInspiMutation.mutate();
-                  }}
-                  className="primary-btn px-4 py-2"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
           <BlackBackdrop
-            className={"z-[110]"}
+            className={""}
             onCloseBlackBackdrop={() => {
               setActiveDelete(false);
             }}
           />
+          <div className=" confirm-wrapper text-center text-[#111] z-50 fixed top-1/2 left-1/2 bg-white font-witch w-[calc(100%-32px)] md:min-w-[500px] rounded-xl p-6 -translate-x-1/2 -translate-y-1/2">
+            <div className="text-3xl font-bold">Are you sure?</div>
+            <div className="my-8">
+              Once you delete this Inspiration, you can't{" "}
+              <span className="text-[#cc0000] font-semibold">undo</span> it.
+            </div>
+            <div className="control flex justify-center gap-2">
+              <button
+                onClick={() => {
+                  setActiveDelete(false);
+                }}
+                className="secondary-btn px-4 py-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  deleteInspiMutation.mutate();
+                }}
+                className="primary-btn px-4 py-2"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </>
       )}
-      <div className="w-full font-witch relative bg-black flex justify-center min-h-screen">
+      <div className="w-full second-track font-witch relative bg-black flex justify-center min-h-screen">
         <div className="detail-container mt-[80px]  md:w-[80%] py-8 px-2">
           <div
             style={{
@@ -223,17 +225,6 @@ function DetailArt() {
               className="left md:w-[50%] shrink-0 flex items-center"
             >
               <div className="p-4 w-full">
-                {/* <LazyLoadImage
-                  id="lalala"
-                  src={detailData?.data.artworkURL}
-                  className="w-full rounded-[32px] "
-                  
-                  onLoad={() => {
-                    const offsetHeightImage =
-                      document.getElementById("lalala").offsetHeight;
-                    setHeight(offsetHeightImage);
-                  }}
-                /> */}
                 <img
                   src={detailData?.data.artworkURL}
                   className="w-full rounded-[32px] "
@@ -316,8 +307,7 @@ function DetailArt() {
                     {currentUser?.save.some((item) => item === id) ? (
                       <button
                         onClick={() => {
-                          if(id)
-                          saveMutation.mutate(id);
+                          if (id) saveMutation.mutate(id);
                         }}
                         className={
                           "px-4 py-3 bg-[#111111] hover:bg-[#111111] text-white text-lg rounded-full"
@@ -328,7 +318,7 @@ function DetailArt() {
                     ) : (
                       <button
                         onClick={() => {
-                          if(id){
+                          if (id) {
                             saveMutation.mutateAsync(id).then(() => {
                               toast(
                                 <>
@@ -338,7 +328,7 @@ function DetailArt() {
                                       src={detailData?.data.artworkURL}
                                       alt=""
                                     />
-  
+
                                     <div className="flex-1">
                                       Saved to gallery!{" "}
                                     </div>
@@ -348,12 +338,13 @@ function DetailArt() {
                                   position: "bottom-center",
                                   autoClose: 3000,
                                   theme: "light",
+                                  hideProgressBar: true,
                                 }
                               );
                             });
                           }
                         }}
-                        className={"px-4 py-3 text-lg"}
+                        className={"px-4 py-3 text-lg primary-btn min-w-[80px]"}
                       >
                         Save
                       </button>
@@ -361,42 +352,36 @@ function DetailArt() {
                   </div>
                 </div>
                 <div className=" mb-8">
-                  <div className="main-title text-3xl font-semibold tracking-wider mb-2">
+                  <div className="main-title text-3xl font-semibold tracking-wider mb-2 ">
                     <LexicalComposer
                       initialConfig={{
                         editorState: detailData?.data.title,
                         editable: false,
-                        namespace:"title",
+                        namespace: "title",
                         onError: (err) => {
                           throw err;
                         },
                       }}
-                      
                     >
                       <PlainTextPlugin
                         contentEditable={
-                          <ContentEditable className="title-container outline-none overflow-y-auto primary-scrollbar   relative min-h-[40px]" />
+                          <ContentEditable className="title-container outline-none overflow-y-auto scrollbar-hide relative min-h-[40px]" />
                         }
                         placeholder={<></>}
                         ErrorBoundary={LexicalErrorBoundary}
                       />
                       <SetInitialTextPlugin
                         state={JSON.stringify(detailData?.data.title)}
-                        dependencie={detailData}
+                        dependencie={detailData?.data.title}
                       />
-
-                      <ClearEditorPlugin />
                     </LexicalComposer>
                   </div>
                   <div className="sub-tilte text-lg">
-                    {/* <ReadMoreBtn limiteLetter={200}>
-                      {detailData?.data.description}
-                    </ReadMoreBtn> */}
                     <LexicalComposer
                       initialConfig={{
                         editorState: detailData?.data.description,
                         editable: false,
-                        namespace:"sub-title",
+                        namespace: "sub-title",
                         onError: (err) => {
                           throw err;
                         },
@@ -411,7 +396,7 @@ function DetailArt() {
                       />
                       <SetInitialTextPlugin
                         state={JSON.stringify(detailData?.data.description)}
-                        dependencie={detailData}
+                        dependencie={detailData?.data.description}
                       />
                       <ClearEditorPlugin />
                       <SingleLinePlugin />
@@ -421,7 +406,7 @@ function DetailArt() {
                 <div className="flex justify-between items-center mb-8">
                   <div className="author flex">
                     <Link
-                      to={`/artMuseum/profile/${detailData?.data.postedBy._id}/created`}
+                      to={`/artMuseum/profile/${detailData?.data.postedBy._id}`}
                     >
                       <div className="avatar">
                         <img
@@ -433,7 +418,7 @@ function DetailArt() {
                     </Link>
                     <div className="info flex flex-col justify-center gap-1 ml-2">
                       <Link
-                        to={`/artMuseum/profile/${detailData?.data.postedBy._id}/created`}
+                        to={`/artMuseum/profile/${detailData?.data.postedBy._id}`}
                       >
                         <p className="leading-none text-lg hover:underline underline-offset-4">
                           {detailData?.data.postedBy.firstName}
@@ -444,24 +429,23 @@ function DetailArt() {
                     </div>
                   </div>
                   {!isOwner &&
-                    (currentUser && detailData?.data.postedBy.followers.filter(item =>{
-                      return item._id = currentUser._id
-                    }
-                    ) ? (
+                    (currentUser &&
+                    detailData?.data.postedBy.followers.some((item) => {
+                      console.log(item);
+                      return item._id === currentUser._id;
+                    }) ? (
                       <button
                         onClick={() => {
                           followMutation.mutate(detailData?.data.postedBy._id);
                         }}
-                        className={
-                          "px-4 py-3 bg-[#111111] hover:bg-[#111111] text-lg"
-                        }
+                        className={"px-4 py-3 secondary-btn text-lg"}
                       >
                         Following
                       </button>
                     ) : (
                       <button
                         onClick={() => {
-                          if(detailData){
+                          if (detailData) {
                             followMutation
                               .mutateAsync(detailData.data.postedBy._id)
                               .then(() => {
@@ -473,7 +457,7 @@ function DetailArt() {
                                         src={detailData?.data.postedBy.photo}
                                         alt=""
                                       />
-  
+
                                       <div className="flex-1">Following! </div>
                                     </div>
                                   </>,
@@ -481,6 +465,7 @@ function DetailArt() {
                                     position: "bottom-center",
                                     autoClose: 3000,
                                     theme: "light",
+                                    hideProgressBar:true
                                   }
                                 );
                               });
@@ -499,13 +484,12 @@ function DetailArt() {
                     <div className="mr-2">
                       <HiHeart
                         onClick={() => {
-                          // debounceLikeBtn();
-                          handleLikePost()
+                          handleLikePost();
                         }}
                         size={30}
                         className={
                           "inline-block " +
-                          `${booLike ? "text-[#e7255f]" : "text-[#a3a3a3]"}`
+                          `${booLike ? "text-primary" : "text-grey-300"}`
                         }
                       />
                       <span className="ml-1 inline-block translate-y-[2px]">
@@ -561,7 +545,6 @@ function DetailArt() {
                             ref={editorRef}
                             editState=""
                             type="comment"
-                            
                           ></MyLexicalEditor>
                           <span
                             id="comment-emoji"
@@ -570,19 +553,16 @@ function DetailArt() {
                               setShowEmojiPicker((prev) => {
                                 if (prev.type === "main") {
                                   return {
-                                    active:false,
-                                    type:""
+                                    active: false,
+                                    type: "",
                                   };
                                 } else {
                                   return {
-                                    active:true,
-                                    type:"main"
+                                    active: true,
+                                    type: "main",
                                   };
                                 }
                               });
-                              // if (detailData?.data.commentPermission) {
-                              //   setShowEmojiPicker(!showEmojiPicker);
-                              // }
                             }}
                           >
                             <AiOutlineSmile
@@ -592,27 +572,25 @@ function DetailArt() {
                           </span>
                         </div>
                       </div>
-                      {showEmojiPicker.active && showEmojiPicker.type === "main" && (
-                        <div className="absolute bottom-[60px] -right-[60px] md:-top-[620%]">
-                          <Picker
-                            onEmojiSelect={handleEmojiSelect}
-                            data={data}
-                          />
-                        </div>
-                      )}
+                      {showEmojiPicker.active &&
+                        showEmojiPicker.type === "main" && (
+                          <div className="absolute bottom-[60px] -right-[60px] md:-top-[620%]">
+                            <Picker
+                              onEmojiSelect={handleEmojiSelect}
+                              data={data}
+                            />
+                          </div>
+                        )}
                     </div>
                     <button
                       disabled={!detailData?.data.commentPermission}
                       onClick={() => {
-                        if(editorRef.current){
+                        if (editorRef.current) {
                           editorRef.current.getEditorState().read(() => {
                             const root = $getRoot();
-                            if(root.__cachedText){
+                            if (root.__cachedText) {
                               const isEmpty = root.__cachedText.trim() === "";
-                              console.log(isEmpty);
-                              if (isEmpty) {
-                                console.log("Nah");
-                              } else {
+                              if (!isEmpty) {
                                 addCommentMutation.mutate();
                               }
                             }

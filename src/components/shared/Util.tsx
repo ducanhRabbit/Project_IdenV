@@ -1,19 +1,18 @@
 const getRandomImage = ()=>{
     const imageList = [
-        "https://i.pinimg.com/564x/c6/cc/65/c6cc65ad9b879a57dd04aa5e2252add4.jpg",
-        "https://i.pinimg.com/564x/df/d9/9e/dfd99edb080f46f2af147e0709a119d5.jpg",
-        "https://pbs.twimg.com/media/De76VrBXcAEDaY5.jpg",
-        "https://i.pinimg.com/564x/bc/f9/e4/bcf9e4039a388d896d049f8d3be4f407.jpg",
-        "https://i.pinimg.com/564x/5d/c3/b9/5dc3b9fb7c3590047762b26789d881fe.jpg",
-        "https://i.pinimg.com/564x/ed/81/34/ed813438552d47fe4d9ffafca391174a.jpg",
-        "https://i.pinimg.com/564x/b5/b2/0f/b5b20fd807a400bca3541a966e2becfd.jpg",
-        "https://i.pinimg.com/564x/6b/d1/d9/6bd1d922a33706f99a3b4ddb32deae88.jpg",
-        "https://i.pinimg.com/564x/22/1d/83/221d832d1ed39ac5fdc8d43f05e5d344.jpg",
-        "https://i.pinimg.com/564x/f1/15/71/f1157164bd4803402019425aa73eb6ed.jpg",
+        "https://i.pinimg.com/564x/f7/9a/42/f79a42ef50ff3a7301b95bf88429b241.jpg",
+        "https://i.pinimg.com/564x/54/04/41/5404413d0a01d5764d5f3565779e811e.jpg",
+        "https://i.pinimg.com/564x/e8/eb/f0/e8ebf0499c4ffe8fead65b68288a4c49.jpg",
+        "https://i.pinimg.com/564x/23/1b/8b/231b8b38a86bdc350796a678b0905de1.jpg",
+        "https://i.pinimg.com/564x/72/ce/bd/72cebdb1b82593324bcaf6780f0bf954.jpg",
+        "https://i.pinimg.com/564x/22/43/4c/22434cc91002c0811e625bf3a3e9ac50.jpg",
+        "https://i.pinimg.com/564x/7d/c6/87/7dc687744ee31a786d62d6d5967a2f46.jpg",
+        "https://i.pinimg.com/564x/52/e5/d8/52e5d82dfdf41afd9d5a6b93495f12f4.jpg",
+        "https://i.pinimg.com/564x/0d/e6/b0/0de6b0228dd45515bfd664914a58488c.jpg",
+        "https://i.pinimg.com/564x/38/18/d3/3818d336fc7a78f77a71420de46d9947.jpg",
     ]
 
     const randomImg = imageList[Math.floor(Math.random() * imageList.length)]
-    console.log(randomImg)
     return randomImg
 }
 

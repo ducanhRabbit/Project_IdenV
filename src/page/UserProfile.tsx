@@ -31,7 +31,9 @@ function UserProfile() {
   const [activeReadmore, setActiveReadmore] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [config, setConfig] = useState({});
+  const [config, setConfig] = useState({
+    sortBy:"popular,-1"
+  });
   const { currentUser } = useAppSelector((state) => state.user);
   const queryClient = useQueryClient();
   const { data: userInfoData } = useQuery({
@@ -56,19 +58,20 @@ function UserProfile() {
     (item) => item._id === currentUser?._id
   );
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+
+    });
+  }, [pathName.pathname, activeTabs]);
+  useEffect(() => {
     if (localStorage.getItem("currentTab")) {
       setActiveTabs(localStorage.getItem("currentTab"));
     }
   }, []);
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [pathName.pathname, pathName.search, activeTabs]);
+  
 
   useEffect(() => {
-    const sortByPopularity = searchParams.get("sortBy") || "popular";
+    const sortByPopularity = searchParams.get("sortBy") || "popular,-1";
     const changeConfig = (key:string, value:string) => {
       setConfig((prev) => ({
         ...prev,
@@ -77,7 +80,6 @@ function UserProfile() {
     };
     changeConfig("sortBy", sortByPopularity);
   }, [window.location.search]);
-  console.log("rerender");
   const isOwner = currentUser?._id === userInfoData?.data._id;
   const { isOpen, openModal, closeModal } = useOpenModal();
   const OwnersBtns = () => {
@@ -144,7 +146,6 @@ function UserProfile() {
       </div>
     );
   };
-  console.log(userInfoData?.data.photo);
   return (
     <>
       <ToastContainer />
@@ -190,8 +191,8 @@ function UserProfile() {
       )}
       <div className="bg-black w-full min-h-screen font-witch pt-[80px] px-2">
         <div className="userInfo-container w-full flex h-full justify-center items-center pt-[100px] mb-12">
-          <div className="user-wrapper max-w-[448px] bg-white w-full rounded-[32px]">
-            <div className=" relative">
+          <div className="user-wrapper max-w-[448px] bg-white w-full rounded-[32px] min-h-[300px]">
+            <div className=" relative min-h-[300px]">
               <div className="avatar absolute top-0 -translate-y-2/3 left-1/2 -translate-x-1/2 ">
                 <div className="rounded-full w-[120px] h-[120px] overflow-hidden border-[4px] border-white bg-white">
                   <LazyLoadImage
@@ -206,12 +207,12 @@ function UserProfile() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col items-center pt-12 pb-6">
+              <div className="flex flex-col min-h-[300px] justify-evenly items-center pt-12 pb-6">
                 <div className="fullName text-4xl my-2">
-                  {userInfoData?.data.userName}
+                  {userInfoData?.data.userName || "Guest"}
                 </div>
                 <div className="email text-xl text-[#5f5f5f]">
-                  {userInfoData?.data.email}
+                  {userInfoData?.data.email || "abc123@gmail.com"}
                 </div>
                 <div className="text-center px-4 py-2">
                   <ReadMoreBtn
@@ -221,7 +222,6 @@ function UserProfile() {
                     {userInfoData?.data.story || ""}
                   </ReadMoreBtn>
                 </div>
-                {/* <div className="quote px-4 my-3 text-center break-all line-clamp-3">{userInfoData?.data.story.length}</div> */}
                 <div
                   onClick={() => {
                     if (userInfoData?.data && userInfoData?.data.following.length > 0) {
@@ -330,7 +330,7 @@ function UserProfile() {
             </button>
           </div>
           {activeTabs === "saved" ? (
-            <SavedTab config={config} />
+            <SavedTab sortConfig={config} />
           ) : (
             <CreatedTab />
           )}

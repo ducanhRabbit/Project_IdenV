@@ -115,7 +115,7 @@ function SignIn({ setShowSignIn }:SignInProps) {
                 name="email"
                 type="text"
                 placeholder="Email"
-                className="placeholder:text-grey-100/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 "
+                className="placeholder:text-grey-100/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 pr-[50px]"
               />
               <AiOutlineMail
                 size={24}
@@ -135,7 +135,7 @@ function SignIn({ setShowSignIn }:SignInProps) {
                 name="password"
                 type={hidePassword ? "password" : "text"}
                 placeholder="Password"
-                className="placeholder:text-grey-100/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 "
+                className="placeholder:text-grey-100/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 pr-[50px]"
               />
               {hidePassword ? (
                 <AiOutlineEyeInvisible
@@ -166,7 +166,7 @@ function SignIn({ setShowSignIn }:SignInProps) {
           </Form>
         </Formik>
 
-        <div className="text-center">
+        <div className="text-center mt-2">
           <span>Don't have an account?</span>
           <button
             onClick={() => {

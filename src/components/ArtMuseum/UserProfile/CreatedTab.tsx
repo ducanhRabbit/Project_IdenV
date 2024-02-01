@@ -7,33 +7,15 @@ import http from "../../../axios/axios";
 import CardImg from "../../shared/CardImg";
 
 function CreatedTab() {
-  const LIMIT = 20;
+  const LIMIT = 40;
   const { id: userId } = useParams();
   const getInspirationByAuthor = async (page:number) => {
     const data = await http.get(
       `/inspiration/user/${userId}?page=${page}&limit=${LIMIT}`
     );
-    console.log(data);
     return data.data;
   };
 
-  // const {
-  //   data: InfiniteData,
-  //   isSuccess,
-  //   fetchNextPage,
-  //   isFetchingNextPage,
-  //   hasNextPage,
-  // } = useInfiniteQuery({
-  //   queryKey: ["infinitInspiration"],
-  //   initialPageParam: 1,
-  //   queryFn: ({ pageParam }) => {
-  //     return getInfinitInspiration(pageParam);
-  //   },
-  //   getNextPageParam: (lastPage, allPages) => {
-  //     return lastPage.length ? allPages.length + 1 : undefined;
-  //   },
-  //   placeholderData: keepPreviousData,
-  // });
   const {
     data: InspirationByAuthorData,
     fetchNextPage,
@@ -49,32 +31,6 @@ function CreatedTab() {
     },
   });
 
-  // const handleObserver = useCallback(
-  //   (entries) => {
-  //     const [target] = entries;
-  //     if (target.isIntersecting) {
-  //       fetchNextPage();
-  //     }
-  //   },
-  //   [fetchNextPage, hasNextPage]
-  // );
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(handleObserver, {
-  //     threshold: 0,
-  //   });
-  //   const element = lastInspirationObserver.current;
-  //   observer.observe(element);
-  //   return () => observer.unobserve(element);
-  // }, [fetchNextPage, hasNextPage, handleObserver]);
-
-  // const content = InspirationByAuthorData?.pages.map((page, index) => {
-  //   const indexPage = index;
-  //   return page.data.map((item, index) => (
-  //     <CardImg key={index} content={item} indexPage={indexPage} />
-  //   ));
-  // });
-  console.log(InspirationByAuthorData);
   return (
     <>
       <div className="header text-right pr-4">
@@ -100,8 +56,6 @@ function CreatedTab() {
                   <CardImg
                     key={index}
                     content={item}
-                    indexPage={Math.floor(index / LIMIT)}
-                    tab="created"
                   />
                 ))}
               </Masonry>

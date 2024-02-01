@@ -14,11 +14,14 @@ export default {
       colors:{
         "primary":"#cc0000",
         "primary-darken":"#ac0000",
+        "primary-lighten":"#e60000",
         "marine": "#4290c3",
         "grey-100":"#ebebeb",
         "grey-200": "#bcbcbc",
+        "grey-300": "#a3a3a3",
+
         "dark":"#333333",
-        "old-gold":"#D1B000"
+        
       },
       keyframes: {
         bouncing: {

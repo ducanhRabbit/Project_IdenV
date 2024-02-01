@@ -25,20 +25,22 @@ import GetRefPlugin from "../../LexicalEditor/Plugins/GetRefPlugin";
 import { AxiosResponse } from "axios";
 import { Inspiration } from "../../../shared/types";
 
-interface EditInspirationModalProps{
-  setActiveEdit:React.Dispatch<React.SetStateAction<boolean>>
+interface EditInspirationModalProps {
+  setActiveEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function EditInspirationModal({ setActiveEdit }:EditInspirationModalProps) {
+function EditInspirationModal({ setActiveEdit }: EditInspirationModalProps) {
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const InspirationQuery = queryClient.getQueryData<AxiosResponse<Inspiration,any>|undefined>(["detail", id]);
+  const InspirationQuery = queryClient.getQueryData<
+    AxiosResponse<Inspiration, any> | undefined
+  >(["detail", id]);
 
   const theme = {
     paragraph: "title-input",
     placeholder: "title-placeholder",
   };
-  const [commentPermission, setEnabled] = useState<boolean|undefined>(
+  const [commentPermission, setEnabled] = useState<boolean | undefined>(
     InspirationQuery?.data.commentPermission
   );
 
@@ -148,7 +150,7 @@ function EditInspirationModal({ setActiveEdit }:EditInspirationModalProps) {
                       }
                       ErrorBoundary={LexicalErrorBoundary}
                     ></PlainTextPlugin>
-                    <UpdateState ref={descriptionRef}></UpdateState>
+                    <GetRefPlugin ref={descriptionRef}></GetRefPlugin>
                     <CharacterLimitPlugin maxLength={200} charset="UTF-16" />
                     <MaxLengthPlugin maxLength={200} />
                     <ClearEditorPlugin />
@@ -228,6 +230,7 @@ function EditInspirationModal({ setActiveEdit }:EditInspirationModalProps) {
           className="primary-btn py-2 px-4 text-lg min-w-[80px]"
           onClick={() => {
             editMutation.mutate();
+            document.body.style.overflow = "auto";
           }}
         >
           Save

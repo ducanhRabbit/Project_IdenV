@@ -9,7 +9,12 @@ import Protected from "./components/shared/Protected";
 import UserProfile from "./page/UserProfile";
 import moment from "moment";
 import DetailArt from "./page/DetailArt";
-
+import CreatePost from "./page/CreatePost";
+import EditProfile from "./page/EditProfile";
+import SearchPage from "./page/SearchPage";
+import CreatedTab from "./components/ArtMuseum/UserProfile/CreatedTab";
+import SavedTab from "./components/ArtMuseum/UserProfile/SavedTab";
+import 'react-toastify/dist/ReactToastify.min.css';
 function App() {
 
   moment.updateLocale("en", {
@@ -57,6 +62,24 @@ function App() {
               <UserProfile />
             </Protected>
           ),
+          children: [
+            {
+              path: "created",
+              element: <CreatedTab />,
+            },
+            {
+              path: "saved",
+              element: <SavedTab sortConfig={{sortBy:"popular,-1"}}/>,
+            },
+          ],
+        },
+        {
+          path: "createInspiration",
+          element: (
+            <Protected>
+              <CreatePost />
+            </Protected>
+          ),
         },
         {
           path: "inspiration/:id",
@@ -65,6 +88,14 @@ function App() {
               <DetailArt />
             </Protected>
           ),
+        },
+        {
+          path: "editProfile",
+          element: <EditProfile />,
+        },
+        {
+          path: "search",
+          element: <SearchPage />,
         },
       ],
     },

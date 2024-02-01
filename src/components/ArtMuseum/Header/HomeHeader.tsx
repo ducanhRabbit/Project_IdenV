@@ -11,12 +11,12 @@ import { BsFillHouseDoorFill } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
 import { MdCreate } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
-import "./GalleryHeader.css";
+import "../../../css/ArtMuseum/GalleryHeader.css";
 import { getAuth, signOut } from "firebase/auth";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import UserSuggest from "./UserSuggest";
 import InspirationSuggest from "./InspirationSuggest";
-import MenuModal from "../../shared/MenuModal";
+import MenuModal from "./MenuModal";
 import http from "../../../axios/axios";
 import BlackBackdrop from "../../shared/BlackBackDrop";
 import { setCurrentUser } from "../../../redux/reducers/userReducer";
@@ -24,6 +24,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import useDebounce from "../../../hook/useDebounce";
 import useScreenSize from "../../../hook/useScreenSize";
 import { NavMenu } from "../../../shared/types";
+
 function GalleryHeader() {
   const auth = getAuth();
   const dispatch = useAppDispatch();
@@ -56,9 +57,11 @@ function GalleryHeader() {
       subMenu: [
         {
           tag: "Profile",
+          link: `/artMuseum/profile/${currentUser?._id}`
         },
         {
           tag: "Edit",
+          link:`/artMuseum/editProfile`
         },
       ],
     },
@@ -73,9 +76,6 @@ function GalleryHeader() {
         },
         {
           tag: "Get help",
-        },
-        {
-          tag: "Register",
         },
         !currentUser
           ? {
@@ -94,16 +94,14 @@ function GalleryHeader() {
 
   useEffect(() => {
     setActiveMobileNav(false);
-  }, [location.pathname]);
-  useEffect(() => {
     setActiveSearchBox(false);
-  }, [location]);
+  }, [location.pathname]);
+
   useEffect(() => {
     if (!debounceValue) setActiveSearchBox(false);
     const getData = async () => {
       try {
         if (!debounceValue) return;
-        console.log("test");
         const res = await Promise.all([
           http.get(`/user/search?key=${debounceValue}`).then((data) => {
             setSuggestUser(data.data);
@@ -141,6 +139,7 @@ function GalleryHeader() {
               alt=""
             />
           </Link>
+          <div className="flex gap-8">
           <Link
             to={"/artMuseum"}
             className={`md:block hidden text-white relative text-lg after:content-[''] ${
@@ -161,6 +160,7 @@ function GalleryHeader() {
           >
             Create
           </Link>
+          </div>
           <div className="search hidden md:block relative group/searchBox flex-1 max-w-[650px]">
             <form className="relative" onSubmit={searchHandler}>
               <input
@@ -172,9 +172,9 @@ function GalleryHeader() {
                   setSearchValue(e.target.value);
                 }}
               />
-              <button className="text-[#111] cursor-pointer absolute py-2 px-4 top-1/2 -translate-y-1/2 left-0">
+              <Link to={`/artMuseum/search?key=${debounceValue}`} className="text-[#111] cursor-pointer absolute py-2 px-4 top-1/2 -translate-y-1/2 left-0">
                 <BsSearch className="" size={20} />
-              </button>
+              </Link>
             </form>
             {activeSearchBox && (
               <div className="absolute hidden group-focus-within/searchBox:block mt-2 rounded-3xl w-full bg-white font-witch px-4 py-3 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]">
@@ -220,18 +220,15 @@ function GalleryHeader() {
                 </div>
               </div>
               <Link
-                to={`/artMuseum/profile/${currentUser?._id}/created`}
+                to={`/artMuseum/profile/${currentUser?._id}`}
                 className="user cursor-pointer px-2 flex items-center gap-2 justify-center"
               >
-                <p className="max-w-[100px] overflow-clip">
-                  {currentUser?.userName || "Guest"}
-                </p>
                 <LazyLoadImage
                   className="w-[45px] h-[45px] block rounded-full light-border object-cover"
                   src={
                     currentUser
                       ? currentUser.photo
-                      : "./src/assets/img/e7cvfy9f2vu41.jpg"
+                      : "https://i.ibb.co/VTbTWLQ/Lucky-Valentine-DM2021.webp"
                   }
                   alt=""
                 />

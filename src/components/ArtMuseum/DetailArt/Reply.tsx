@@ -6,35 +6,31 @@ import EditMenu from "./EditMenu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Picker from "@emoji-mart/react";
 // import "./EmojiPicker.css";
-import {
-  $createTextNode,
-  $insertNodes,
-  LexicalEditor,
-} from "lexical";
+import { $createTextNode, $insertNodes, LexicalEditor } from "lexical";
 import { AiOutlineSmile } from "react-icons/ai";
 import data from "@emoji-mart/data";
 import moment from "moment";
 import http from "../../../axios/axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { Menu, Transition } from "@headlessui/react";
 import { ActiveComment, ActiveEmoji, Comment } from "../../../shared/types";
 import SetInitialTextPlugin from "../../LexicalEditor/Plugins/SetInitialTextPlugin";
 import { TagNameNode } from "../../LexicalEditor/Nodes/TagNameNode";
-import MyLexicalEditor from "../../LexicalEditor/MyLexicalEditor"
+import MyLexicalEditor from "../../LexicalEditor/MyLexicalEditor";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { setCurrentInspiration } from "../../../redux/reducers/inspirationReducer";
 
-interface ReplyProps{
-  replyData:Comment,
-  activeComment:ActiveComment|null,
-  setActiveComment: React.Dispatch<React.SetStateAction<ActiveComment | null>>,
-  target:string,
-  editable:boolean,
-  showEmojiPicker:ActiveEmoji,
-  setShowEmojiPicker:React.Dispatch<React.SetStateAction<ActiveEmoji>>,
-  index:number,
+interface ReplyProps {
+  replyData: Comment;
+  activeComment: ActiveComment | null;
+  setActiveComment: React.Dispatch<React.SetStateAction<ActiveComment | null>>;
+  target: string;
+  editable: boolean;
+  showEmojiPicker: ActiveEmoji;
+  setShowEmojiPicker: React.Dispatch<React.SetStateAction<ActiveEmoji>>;
+  index: number;
 }
 
 function Reply({
@@ -45,8 +41,8 @@ function Reply({
   editable,
   showEmojiPicker,
   setShowEmojiPicker,
-  index
-}:ReplyProps) {
+  index,
+}: ReplyProps) {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { currentUser } = useAppSelector((state) => state.user);
@@ -67,20 +63,20 @@ function Reply({
     editorState: replyData.comment,
     editable: false,
     theme,
-    onError(error:Error) {
+    onError(error: Error) {
       console.log(error);
     },
     nodes: [TagNameNode],
   };
-
+  
   const isEditting =
     activeComment &&
     activeComment.id === replyData._id &&
     activeComment.type === "edit";
 
-  const editRef1 = useRef<LexicalEditor|null>(null);
-  const handleEmojiSelect = (e:any) => {
-    if(editRef1.current){
+  const editRef1 = useRef<LexicalEditor | null>(null);
+  const handleEmojiSelect = (e: any) => {
+    if (editRef1.current) {
       editRef1.current.update(() => {
         const node = $createTextNode(e.native);
         $insertNodes([node]);
@@ -89,16 +85,15 @@ function Reply({
   };
 
   const queryClient = useQueryClient();
-  const submitEdit = async() => {
+  const submitEdit = async () => {
     if (editRef1.current !== undefined && editRef1.current !== null) {
       const latestEditorState = editRef1.current.getEditorState();
-      console.log(JSON.stringify(latestEditorState))
       const res = http.post(
         `inspiration/${id}/comment/edit/${target}/${replyData._id}`,
         {
           reply: JSON.stringify(latestEditorState),
         }
-      )
+      );
       return res;
     }
   };
@@ -124,11 +119,6 @@ function Reply({
         {isEditting && (
           <div className="pr-2">
             <div className="flex gap-2">
-              {/* <InputComment
-                type={"edit"}
-                editorRef={editRef1}
-                editState={replyData?.comment}
-              /> */}
               <div className="relative flex-1">
                 <div className="rounded-[36px] bg-[#f2f0f5] overflow-hidden">
                   <div className="flex  items-center relative overflow-y-auto">
@@ -141,22 +131,21 @@ function Reply({
                     <span
                       className="px-2 "
                       onClick={() => {
-                    
-                        setShowEmojiPicker((prev)=>{
-                          if(prev.index === index){
+                        setShowEmojiPicker((prev) => {
+                          if (prev.index === index) {
                             return {
-                              active:false,
-                              type:"reply",
-                              index:-1
-                            }
-                          }else{
+                              active: false,
+                              type: "reply",
+                              index: -1,
+                            };
+                          } else {
                             return {
-                              active:true,
-                              type:"reply",
-                              index:index
-                            }
+                              active: true,
+                              type: "reply",
+                              index: index,
+                            };
                           }
-                        })
+                        });
                       }}
                     >
                       <AiOutlineSmile
@@ -175,7 +164,7 @@ function Reply({
             </div>
             <div className="edit-controller flex justify-end gap-2 mt-2">
               <button
-                className={"py-2 px-3 primary-btn"}
+                className={"py-2 px-3 secondary-btn"}
                 onClick={() => {
                   setActiveComment(null);
                 }}
@@ -183,7 +172,7 @@ function Reply({
                 Cancel
               </button>
               <button
-                className={"py-2 px-3 secondary-btn"}
+                className={"py-2 px-3 primary-btn"}
                 onClick={() => {
                   editMutation.mutate();
                 }}
@@ -196,9 +185,12 @@ function Reply({
         {!isEditting && (
           <div>
             <div className="min-h-[45px] bg-[#f2f0f5] rounded-lg p-2">
-              <div className="font-semibold tracking-wider">
-                {replyData.postedBy?.firstName}
-              </div>
+              <Link
+                to={`/artMuseum/profile/${replyData.postedBy._id}`}
+                className="font-semibold tracking-wider hover:underline"
+              >
+                {replyData.postedBy?.userName}
+              </Link>
               <div className="">
                 <LexicalComposer initialConfig={initialConfig}>
                   <PlainTextPlugin
@@ -237,30 +229,32 @@ function Reply({
               </div>
               {isOwner && editable && (
                 <Menu as="div" className="leading-none relative">
-                <Menu.Button><HiOutlineDotsHorizontal/></Menu.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items
-                    className={
-                      "absolute mt-2 right-0 rounded-xl p-1 min-w-[100px] z-50 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
-                    }
+                  <Menu.Button>
+                    <HiOutlineDotsHorizontal />
+                  </Menu.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
                   >
-                    <EditMenu
-                      data={target}
-                      reply={replyData}
-                      type={"reply"}
-                      editHandler={editHandler}
-                    />
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+                    <Menu.Items
+                      className={
+                        "absolute mt-2 right-0 rounded-xl p-1 min-w-[100px] z-50 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none "
+                      }
+                    >
+                      <EditMenu
+                        data={target}
+                        reply={replyData}
+                        type={"reply"}
+                        editHandler={editHandler}
+                      />
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
               )}
             </div>
           </div>

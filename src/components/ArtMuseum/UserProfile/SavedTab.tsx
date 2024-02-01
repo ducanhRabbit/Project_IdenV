@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { Masonry } from "@mui/lab";
 import {
@@ -12,31 +12,22 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch } from "react-redux";
 import SortBy from "./SortBy";
 import http from "../../../axios/axios";
-import CardImg from "../../shared/CardImg";
+import SavedCard from "./SavedCard";
 import BlackBackdrop from "../../shared/BlackBackDrop";
 import { setCurrentUser } from "../../../redux/reducers/userReducer";
 import { ConfirmWarnState } from "../../../shared/types";
-interface SavedTab{
-  config: object
+import DelayChild from "../../shared/DelayChild";
+interface SavedTab {
+  sortConfig: {
+    sortBy: string
+  };
 }
-function SavedTab({ config }:SavedTab) {
-  const LIMIT = 20;
+function SavedTab({ sortConfig }: SavedTab) {
+  const LIMIT = 40;
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { id: userId } = useParams();
-  const sortOptions = [
-    {
-      id: 1,
-      value: "popular,-1",
-      label: "Most likes",
-    },
-    {
-      id: 2,
-      value: "createdAt",
-      label: "Last saved to",
-    },
-  ];
-  const getSaved = async (page:number, params:any) => {
+  const getSaved = async (page: number, params: any) => {
     const data = await http.get(`/user/${userId}/saved`, {
       params: {
         ...params,
@@ -47,37 +38,37 @@ function SavedTab({ config }:SavedTab) {
 
     return data.data;
   };
-  const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
-  const [activeConfirmWarn, setActiveConfirmWarn] = useState<ConfirmWarnState | null>(null);
-  console.log(selectedOption);
+  const location = useLocation()
+  const [activeConfirmWarn, setActiveConfirmWarn] =
+    useState<ConfirmWarnState | null>(null);
   const {
     data: savedData,
     fetchNextPage,
     isLoading,
     hasNextPage,
+    refetch
   } = useInfiniteQuery({
-    queryKey: ["savedPost", config],
+    queryKey: ["savedPost", sortConfig],
     initialPageParam: 1,
-    queryFn: ({ pageParam = 1 }) => getSaved(pageParam, config),
+    queryFn: ({ pageParam = 1 }) => getSaved(pageParam, sortConfig),
 
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length ? allPages.length + 1 : undefined;
+      return lastPage.length === LIMIT ? allPages.length + 1 : undefined;
     },
     placeholderData: keepPreviousData,
   });
+  useEffect(()=>{
+    refetch()
+  },[location.pathname])
   const deleteMutation = useMutation({
     mutationKey: ["deleteSaved"],
-    mutationFn: (postId:string) => {
+    mutationFn: (postId: string) => {
       const res = http.delete(`/user/saved/${postId}`);
-      return res
+      return res;
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries({queryKey:["savedPost"]}
-      // {
-      //   refetchPage: (page, index) => {
-      //     return index === Math.floor(index / LIMIT);
-      //   },
-      // }
+      queryClient.invalidateQueries(
+        { queryKey: ["savedPost"] }
       );
       const user = await http.get(`user/info/${userId}`);
       dispatch(setCurrentUser(user.data));
@@ -122,55 +113,7 @@ function SavedTab({ config }:SavedTab) {
       )}
       <div>
         <div className="header flex justify-between items-center px-4">
-          <SortBy optionsList={sortOptions} />
-          {/* <Listbox
-            value={selectedOption}
-            onChange={(option) => {
-              setSelectedOption(option);
-              searchParams.set("sortBy", option || "");
-              setSearchParams(searchParams);
-            }}
-            as="div"
-            className={"relative z-20"}
-          >
-            <Listbox.Button className="p-3 rounded-full bg-white active:scale-95 duration-200 hover:bg-[#efefef]">
-              <DiGhostSmall size={20} color="#000" />
-            </Listbox.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Listbox.Options
-                className={
-                  "absolute left-0 min-w-[150px] mt-2 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-black"
-                }
-              >
-                {sortOptions.map((option, index) => (
-                  <Listbox.Option value={option.value} key={index}>
-                    {({ active, selected }) => (
-                      <>
-                        <div
-                          className={`py-2 px-2 rounded-md  w-full inline-block ${
-                            active
-                              ? "bg-blue-500 text-red-500"
-                              : "bg-white text-black"
-                          }`}
-                        >
-                          {option.label}
-                        </div>
-                        {selected ? <div>huhu</div> : <div>Nono</div>}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
-          </Listbox> */}
+          <SortBy sortConfig={sortConfig}/>
           <div className="flex items-center gap-2">
             <Link
               to={"/artMuseum/createInspiration"}
@@ -178,31 +121,12 @@ function SavedTab({ config }:SavedTab) {
             >
               <FaPlus size={20} color="#000" />
             </Link>
-            {/* <button
-                onClick={() => {
-                  setActiveSelect(true);
-                }}
-                className="p-3 rounded-full bg-white hover:bg-[#efefef] active:scale-95 duration-200"
-              >
-                <AiFillEdit size={20} color="#000" />
-              </button> */}
-            {/* <Link
-            to={"/artMuseum/createInspiration"}
-            className="add-btn inline-block p-3 rounded-full bg-white hover:bg-[#efefef] active:scale-95 duration-200"
-          >
-            <FaPlus size={20} color="#000" />
-          </Link>
-          <button onClick={()=>{
-            setActiveSelect(true)
-          }} className="p-3 rounded-full bg-white hover:bg-[#efefef] active:scale-95 duration-200">
-            <AiFillEdit size={20} color="#000" />
-          </button> */}
           </div>
         </div>
         <div className="mainboard-container pt-8 bg-black overflow-hidden">
-          {!!savedData?.pages.flat().length && (
+          {savedData && savedData?.pages.flat().length > 0 && (
             <InfiniteScroll
-              dataLength={savedData?.pages.flat().length || 0}
+              dataLength={savedData.pages.flat().length || 0}
               next={() => {
                 fetchNextPage();
               }}
@@ -210,17 +134,13 @@ function SavedTab({ config }:SavedTab) {
               loader={<div>Loading...</div>}
             >
               <div className="overflow-hidden">
-                <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
-                  {savedData?.pages.flat().map((item, index) => (
-                    <CardImg
-                      tab={"saved"}
-                      setActiveConfirmWarn={setActiveConfirmWarn}
-                      key={index}
-                      content={item}
-                      indexPage={Math.floor(index / LIMIT)}
-                    />
-                  ))}
-                </Masonry>
+                <DelayChild>
+                  <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{width:"100%"}}>
+                    {savedData?.pages.flat().map((item, index) => (
+                      <SavedCard content={item} key={index} setActiveConfirmWarn={setActiveConfirmWarn}/>
+                    ))}
+                  </Masonry>
+                </DelayChild>
               </div>
             </InfiniteScroll>
           )}

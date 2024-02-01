@@ -15,7 +15,7 @@ import data from "@emoji-mart/data";
 import { $createTextNode, $insertNodes, LexicalEditor } from "lexical";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import http from "../../../axios/axios";
 import { ClearEditorPlugin } from "@lexical/react/LexicalClearEditorPlugin";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
@@ -100,7 +100,7 @@ function CommentPost({
     mutationKey: ["submitEdit"],
     mutationFn: submitEdit,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["detail"] });
+      queryClient.invalidateQueries({ queryKey: ["detail",id] });
       setActiveComment(null);
     },
   });
@@ -108,7 +108,7 @@ function CommentPost({
     mutationKey: ["addReply"],
     mutationFn: submitReply,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["detail"] });
+      queryClient.invalidateQueries({ queryKey: ["detail",id] });
       setActiveComment(null);
     },
   });
@@ -126,9 +126,9 @@ function CommentPost({
           {!isEditting && (
             <div className="">
               <div className="min-h-[45px] bg-[#f2f0f5] rounded-lg p-2">
-                <div className="font-semibold tracking-wider">
-                  {commentData.postedBy.firstName}
-                </div>
+                <Link to={`/artMuseum/profile/${commentData.postedBy._id}/created`} className="font-semibold tracking-wider hover:underline">
+                  {commentData.postedBy.userName}
+                </Link>
                 <div className="">
                   <LexicalComposer
                     initialConfig={{
@@ -137,7 +137,7 @@ function CommentPost({
                       onError: (err) => {
                         throw err;
                       },
-                      namespace: "edit-comment",
+                      namespace: "display",
                     }}
                   >
                     <PlainTextPlugin
@@ -211,7 +211,7 @@ function CommentPost({
               <div className="flex gap-2">
                 <div className="relative flex-1">
                   <div className="rounded-[36px] bg-[#f2f0f5] overflow-hidden">
-                    <div className="flex  items-center relative overflow-y-auto">
+                    <div className="flex  items-center relative overflow-y-auto ">
                       <MyLexicalEditor
                         ref={editRef}
                         editState={commentData?.comment}
@@ -222,7 +222,7 @@ function CommentPost({
                         className="px-2 "
                         onClick={() => {
                           setShowEmojiPicker((prev) => {
-                            if (prev === showEmojiPicker) {
+                            if (prev.active && prev.type === 'edit') {
                               return {
                                 active: false,
                                 type: "",
@@ -263,7 +263,7 @@ function CommentPost({
               </div>
               <div className="edit-controller flex justify-end gap-2 mt-2">
                 <button
-                  className={"py-2 px-3 primary-btn"}
+                  className={"py-2 px-3 secondary-btn"}
                   onClick={() => {
                     setActiveComment(null);
                   }}
@@ -271,7 +271,7 @@ function CommentPost({
                   Cancel
                 </button>
                 <button
-                  className={"py-2 px-3 secondary-btn"}
+                  className={"py-2 px-3 primary-btn"}
                   onClick={() => {
                     editMutation.mutate();
                   }}
@@ -369,7 +369,7 @@ function CommentPost({
               </div>
               <div className="edit-controller flex justify-end gap-2 mt-2">
                 <button
-                  className={"py-2 px-3 primary-btn"}
+                  className={"py-2 px-3 secondary-btn"}
                   onClick={() => {
                     setActiveComment(null);
                   }}

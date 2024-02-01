@@ -1,7 +1,9 @@
 import { Menu, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { NavMenu } from "../../shared/types";
+import { NavMenu } from "../../../shared/types";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useAppSelector } from "../../../redux/hook";
 
 interface MenuModalProps{
   children: React.ReactNode
@@ -18,6 +20,7 @@ export default function MenuModal({
   menuClass = "menu-item",
   subClass = "sub-item",
 }:MenuModalProps) {
+  const {currentUser} = useAppSelector(state => state.user)
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -38,6 +41,12 @@ export default function MenuModal({
             menuWrapperClass
           }
         >
+          <Link to={`/artMuseum/profile/${currentUser?._id}`} className="flex items-center gap-2 mb-2">
+            <div className="w-[50px] h-[50px] rounded-full overflow-hidden">
+              <LazyLoadImage className="w-full h-full object-cover" src={currentUser?.photo || 'https://i.ibb.co/VTbTWLQ/Lucky-Valentine-DM2021.webp'}></LazyLoadImage>
+            </div>
+            <span>{currentUser?.userName || "Guest"}</span>
+          </Link>
           {menuList.map((menu, index) => (
             <div key={index}>
               {menu.subMenu ? (

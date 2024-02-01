@@ -7,7 +7,6 @@ interface SetInitialTextPluginProps{
 }
 
 export default function SetInitialTextPlugin({state,dependencie}:SetInitialTextPluginProps) {
-
     const [editor] = useLexicalComposerContext()
     useEffect(()=>{
       if(state){

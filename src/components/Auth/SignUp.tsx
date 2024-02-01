@@ -112,7 +112,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
           }}
           validationSchema={Yup.object({
             firstName: Yup.string()
-              .max(15, "Must be 15 characters or less")
+              .max(10, "Must be 10 characters or less")
               .required("Required"),
             lastName: Yup.string()
               .max(20, "Must be 20 characters or less")
@@ -138,7 +138,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
                     id="firstName"
                     name="firstName"
                     placeholder="First name"
-                    className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 "
+                    className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 pr-[50px] py-4 duration-200 "
                   />
                   <BiUserCircle
                     size={25}
@@ -158,7 +158,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
                     id="lastName"
                     placeholder="Last name"
                     type="text"
-                    className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 "
+                    className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 pr-[50px] py-4 duration-200 "
                   />
                   <BsTelephone
                     size={20}
@@ -179,7 +179,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
                   type="text"
                   id="email"
                   placeholder="Email"
-                  className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 "
+                  className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 pr-[50px] "
                 />
                 <AiOutlineMail
                   size={24}
@@ -199,7 +199,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
                   name="password"
                   type={hidePassword ? "password" : "text"}
                   placeholder="Password"
-                  className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 "
+                  className="placeholder:text-[#ebebeb]/70 text-white w-full bg-[#333333] rounded-xl border-2 border-transparent focus:border-2 focus:border-white focus:shadow-[0_0_10px] focus:shadow-[#f7f7f7]/70 outline-none px-5 py-4 duration-200 pr-[50px]"
                 />
                 {hidePassword ? (
                   <AiOutlineEyeInvisible
@@ -230,8 +230,8 @@ function SignUp({ setShowSignIn }: SignUpProps) {
           </Form>
         </Formik>
 
-        <div className="text-center">
-          <span>Don't have an account?</span>
+        <div className="text-center mt-2">
+          <span>Already a member?</span>
           <span
             onClick={() => {
               setShowSignIn(true);

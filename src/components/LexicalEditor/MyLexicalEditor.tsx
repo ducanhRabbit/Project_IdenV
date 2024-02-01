@@ -8,24 +8,27 @@ import "../../css/Lexical/LexicalTheme.css"
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { TagNameNode } from "./Nodes/TagNameNode";
+import ControlEditablePlugin from "./Plugins/ControlEditablePlugin";
+import SetInitialTextPlugin from "./Plugins/SetInitialTextPlugin";
+import TagNamePlugin from "./Plugins/TagNamePlugin";
+import { TypeEditor } from "../../shared/types";
 
 
 interface MyLexicalEditorProps {
   initialText?: string;
-  type: string;
+  type: TypeEditor;
   editState: string;
   editable: boolean;
 }
 
 function MyLexicalEditor(props: MyLexicalEditorProps, ref: any) {
-  const { initialText, type, editState, editable = true } = props;
+  const { type, editState, editable = true } = props;
   const theme = {
     hashtag: "editor-hashtag",
     paragraph: "comment-input",
     placeholder: "editor-placeholder",
     tagName: "editor-tagName",
   };
-  console.log(editable);
   const initialConfig = {
     namespace: "MyEditor",
     editable: editable,
@@ -41,7 +44,7 @@ function MyLexicalEditor(props: MyLexicalEditorProps, ref: any) {
       <PlainTextPlugin
         ErrorBoundary={LexicalErrorBoundary}
         contentEditable={
-          <ContentEditable className="comment-container outline-none relative min-h-[20px] flex-grow" />
+          <ContentEditable className="comment-container outline-none relative min-h-[20px] flex-grow " />
         }
         placeholder={
           <div className="comment-placeholder absolute top-1/2 -translate-y-1/2 left-3 select-none text-[#201918]/50">
@@ -50,9 +53,9 @@ function MyLexicalEditor(props: MyLexicalEditorProps, ref: any) {
         }
       ></PlainTextPlugin>
       <GetRefPlugin ref={ref}></GetRefPlugin>
-      {/* <ControlEditablePlugin editable={editable} />
-      <UpdateInitialText type={type} initText={initialText}></UpdateInitialText>
-      <EditPlugin type={"edit"} state={editState}></EditPlugin> */}
+      <ControlEditablePlugin editable={editable} />
+      <TagNamePlugin type={type}></TagNamePlugin>
+      <SetInitialTextPlugin state={editState} dependencie={null}></SetInitialTextPlugin>
       <ClearEditorPlugin />
       <AutoFocusPlugin />
     </LexicalComposer>

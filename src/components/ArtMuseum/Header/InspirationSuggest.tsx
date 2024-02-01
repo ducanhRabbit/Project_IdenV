@@ -9,8 +9,8 @@ interface InspirationSuggestProps{
 function InspirationSuggest({ suggestList }:InspirationSuggestProps) {
   return (
     <ul className="grid grid-cols-3 gap-2">
-      {suggestList && suggestList.map((item) => (
-        <li >
+      {suggestList && suggestList.map((item,index) => (
+        <li key={index}>
           <Link to={`/artMuseum/inspiration/${item._id}`} className="flex rounded-2xl overflow-hidden group">
             <div className="w-[40%] h-[100px] shrink-0">
               <LazyLoadImage

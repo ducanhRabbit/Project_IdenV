@@ -1,24 +1,43 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { DiGhostSmall } from "react-icons/di";
 import { useSearchParams } from "react-router-dom";
 
 import { FaCheck } from "react-icons/fa";
-import { SortOption } from "../../../shared/types";
 
 interface SortByProps{
-  optionsList: SortOption[]
+  sortConfig: {
+    sortBy: string
+  }
 }
 
-function SortBy({ optionsList }:SortByProps) {
-  const [selectedOption, setSelectedOption] = useState(optionsList[0]);
+function SortBy({ sortConfig }:SortByProps) {
+
+  const sortOptions = [
+    {
+      id: 1,
+      value: "popular,-1",
+      label: "Most likes",
+    },
+    {
+      id: 2,
+      value: "createdAt,-1",
+      label: "Last saved to",
+    },
+  ];
   const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedOption, setSelectedOption] = useState(sortConfig.sortBy);
+
+  useEffect(()=>{
+    setSelectedOption(sortConfig.sortBy)
+  },[sortConfig])
+
   return (
     <Listbox
       value={selectedOption}
       onChange={(option) => {
         setSelectedOption(option);
-        searchParams.set("sortBy", option["value"] || "");
+        searchParams.set("sortBy", option);
         setSearchParams(searchParams);
       }}
       as="div"
@@ -41,7 +60,7 @@ function SortBy({ optionsList }:SortByProps) {
             "absolute left-0 min-w-[150px] mt-2 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-black"
           }
         >
-          {optionsList.map((option, index) => (
+          {sortOptions.map((option, index) => (
             <Listbox.Option value={option.value} key={index}>
               {({ active, selected }) => (
                 <>

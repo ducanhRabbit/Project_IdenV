@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Inspiration, User } from '../../shared/types';
+
+interface currentInspiration{
+  currentInspiration: User
+}
 
 const initialState = {
-    currentInspiration : null,
-}
+    
+}as currentInspiration
 
 const inspirationReducer = createSlice({
   name: 'inspiration',

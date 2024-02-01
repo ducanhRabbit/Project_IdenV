@@ -40,7 +40,7 @@ export interface Inspiration{
   likes:User[],
   postedBy:User,
   comments:[],
-  createAt:string,
+  createdAt:string,
   updatedAt:string
 }
 
@@ -91,5 +91,7 @@ export interface Comment{
 export interface ActiveEmoji{
   active:boolean,
   index?:number,
-  type?:string
+  type:string
 }
+
+export type TypeEditor = "reply" | "edit" | "comment" | "display"
