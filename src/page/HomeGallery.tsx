@@ -6,7 +6,7 @@ function HomeGallery() {
   return (
     <>
       <ToastContainer></ToastContainer>
-      <div className='gallery-bg w-full h-screen bg-[url("https://wallpaperaccess.com/full/2233514.jpg")] bg-gallery70 sm:bg-gallery45 lg:bg-galleryTopCent bg-cover'>
+      <div className='gallery-bg w-full h-screen bg-[url("./src/assets/img/2233514.jpg")] bg-gallery70 sm:bg-gallery45 lg:bg-galleryTopCent bg-cover'>
         <div className="relative overlay fadeToBottom w-full h-screen"></div>
       </div>
       <div className="bg-black py-4">
