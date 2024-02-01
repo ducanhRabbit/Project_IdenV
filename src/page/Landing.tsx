@@ -15,7 +15,7 @@ import Others from "../components/Landing/Others";
 import Sidebar from "../components/Landing/Sidebar";
 import animationEffect from "../shared/animationEffect";
 import useScreenSize from "../hook/useScreenSize";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import BlackBackdrop from "../components/shared/BlackBackDrop";
 import Features from "../components/Landing/Features";
@@ -24,12 +24,19 @@ function Landing() {
   const { fadeEffect, initMotion, fadeX20 } = animationEffect;
   const { screenHeight } = useScreenSize();
   const horizontalReccomended = screenHeight <= 500;
-
+  const location = useLocation()
   let [sidebarOpen, setSidebarOpen] = useState(false);
   let [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     document.body.style.overflowY = horizontalReccomended ? "hidden" : "auto";
   }, [screenHeight]);
+
+  useEffect(()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  },[location.pathname])
 
   const navList = [
     {
@@ -38,15 +45,15 @@ function Landing() {
     },
     {
       tag: "News",
-      link: "456",
+      link: "/",
     },
     {
       tag: "Characters",
-      link: "789",
+      link: "/",
     },
     {
       tag: "Features",
-      link: "8621",
+      link: "/",
     },
     {
       tag: "Art Museum",
@@ -272,7 +279,7 @@ function Landing() {
                   />
                 </div>
               </div>
-              <div className="copyright text-xs md:text-base">
+              <div className="copyright text-xs md:text-base text-center">
                 <BiCopyright className="inline-block" />
                 Joker Studio <BiCopyright className="inline-block" />
                 2020 NetEaseInc. All Rights Reserved

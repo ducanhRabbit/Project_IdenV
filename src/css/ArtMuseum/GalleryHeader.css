@@ -1,0 +1,23 @@
+.option .menu-wrapper{
+    margin-top: 16px;
+    color: black;
+    padding: 8px;
+}
+
+.option .menu-item{
+    padding: 4px;
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.option .menu-item:hover{
+    border-radius: 6px;
+    background-color: #cc0000;
+    color: #fff;
+}
+
+.option .sub-title{
+    padding: 4px 8px;
+    font-size: 16px;
+    color: #6b6b6b;
+}

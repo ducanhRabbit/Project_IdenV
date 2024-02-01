@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 import { useDispatch } from "react-redux";
@@ -15,9 +15,10 @@ import { Swiper as SwiperType } from "swiper/types";
 interface CarouselProps {
   data: Character[]|undefined;
   currentRole: string
+  setCurrentActive: React.Dispatch<React.SetStateAction<number>>
 }
 
-function Carousel({ data, currentRole}: CarouselProps) {
+function Carousel({ data, currentRole,setCurrentActive}: CarouselProps) {
   const [carouselSwiper,setCarouselSwiper] = useState<SwiperType|null>(null)
   const { currentChar } = useAppSelector((state) => state.charInfo);
   const arrowRef = useRef(null);
@@ -60,6 +61,7 @@ function Carousel({ data, currentRole}: CarouselProps) {
               className={`cursor-pointer`}
               onClick={() => {
                 dispatch(getCharInfo(char));
+                setCurrentActive(index)
               }}
             >
               <div

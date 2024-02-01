@@ -51,7 +51,7 @@ export default function Character() {
           <div className="left-content w-full flex flex-col items-center  lg:w-1/2 ">
             <img
               src={currentChar.photo}
-              className=" w-full min-h-[1200px] md:min-h-[1100px] md:w-[600px] md:max-h-[850px] lg:max-h-max  object-cover"
+              className=" w-full md:min-h-[1100px] md:w-[600px] md:max-h-[850px] lg:max-h-max  object-cover"
               alt=""
             />
             {isTablet && (
@@ -129,14 +129,14 @@ export default function Character() {
               </button>
             </div>
             <div className="character-carousel inline-block w-[85%] mx-auto mt-6 mb-4 order-3 lg:order-2">
-              <Carousel currentRole={currentRole} data={dataCharacter} />
+              <Carousel setCurrentActive={setCurrentActive} currentRole={currentRole} data={dataCharacter} />
             </div>
             <div className="info-char px-8 lg:px-4  order-1 lg:order-3">
               <h2
                 className={
                   (currentRole === "survival"
                     ? "text-marine"
-                    : "text-primary") + " career text-5xl lg:text-[68px] my-4"
+                    : "text-primary-lighten") + " career text-5xl lg:text-[68px] my-4"
                 }
               >
                 {currentChar.career}
@@ -149,7 +149,7 @@ export default function Character() {
                   className={
                     (currentRole === "survival"
                       ? "text-marine"
-                      : "text-primary") + " title text-2xl mb-2"
+                      : "text-primary-lighten") + " title text-2xl mb-2"
                   }
                 >
                   Background Story
@@ -162,7 +162,7 @@ export default function Character() {
                     className={
                       (currentRole === "survival"
                         ? "text-marine"
-                        : "text-primary") + " settings-title text-2xl mb-2"
+                        : "text-primary-lighten") + " settings-title text-2xl mb-2"
                     }
                   >
                     Character Settings

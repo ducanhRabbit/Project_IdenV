@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import { User } from '../../shared/types';
 
 interface userState{
-  currentUser: User | null
+  currentUser: User
 }
 
 const initialState = {
-    currentUser : null
+    
 }as userState
 
 const userReducer = createSlice({

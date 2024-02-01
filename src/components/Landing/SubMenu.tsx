@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { NavMenu } from "../../shared/types";
+import { Link } from "react-router-dom";
 
 interface SubMenuProps {
-  data:NavMenu
+  data: NavMenu;
 }
-function SubMenu({ data }:SubMenuProps) {
+function SubMenu({ data }: SubMenuProps) {
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   return (
     <>
-      <li className={"text-xl border-b-2 border-[#121212]" + (subMenuOpen ? " bg-primary" : "")}>
+      <li
+        className={
+          "text-xl border-b-2 border-[#121212]" +
+          (subMenuOpen ? " bg-primary" : "")
+        }
+      >
         <div
           className="p-4 flex justify-between items-center"
           onClick={() => setSubMenuOpen(!subMenuOpen)}
@@ -37,9 +43,12 @@ function SubMenu({ data }:SubMenuProps) {
         }
         className="h-0 overflow-hidden text-lg"
       >
-        {data.subMenu && data.subMenu.map((subMenu, index) => (
-          <li key={index} className=" px-5 py-4 bg-[#121212]">{subMenu.tag}</li>
-        ))}
+        {data.subMenu &&
+          data.subMenu.map((subMenu, index) => (
+            <li key={index} className=" px-5 py-4 bg-[#121212]">
+              <Link to={subMenu.link || "/"}>{subMenu.tag}</Link>
+            </li>
+          ))}
       </motion.ul>
     </>
   );

@@ -8,13 +8,20 @@ export default {
     // },
     fontFamily: {
       witch: ["Griffy"],
+      inter: ["Inter"]
     },
     extend: {
       colors:{
         "primary":"#cc0000",
         "primary-darken":"#ac0000",
-        "marine": "#0096c7",
-        "grey-100": "#bcbcbc"
+        "primary-lighten":"#e60000",
+        "marine": "#4290c3",
+        "grey-100":"#ebebeb",
+        "grey-200": "#bcbcbc",
+        "grey-300": "#a3a3a3",
+
+        "dark":"#333333",
+        
       },
       keyframes: {
         bouncing: {

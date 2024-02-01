@@ -10,7 +10,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "swiper/css/effect-fade";
 
-import "./Swiper.css";
+import "../../css/Landing/Swiper.css";
 
 import { Navigation, Controller, EffectFade } from "swiper/modules";
 import useScreenSize from "../../hook/useScreenSize";

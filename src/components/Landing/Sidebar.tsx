@@ -46,7 +46,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         },
         {
           tag: "IDV art museum",
-          link: "#",
+          link: "/artMuseum",
           subMenu: null,
         },
       ],

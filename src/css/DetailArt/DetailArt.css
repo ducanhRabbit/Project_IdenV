@@ -1,0 +1,10 @@
+.comment-input{
+    width: 100%;
+    z-index: 1;
+    position: relative;
+    max-height: 96px;
+    overflow: auto;
+    padding: 0.8rem;
+
+}
+
