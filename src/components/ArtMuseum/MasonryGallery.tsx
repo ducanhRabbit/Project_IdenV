@@ -1,12 +1,12 @@
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Masonry } from "@mui/lab";
+import Masonry from "react-masonry-css";
 import { TailSpin } from "react-loader-spinner";
 import http from "../../axios/axios";
 import CardImg from "../shared/CardImg";
 import ScrollTopBtn from "../shared/ScrollTopBtn";
-import DelayChild from "../shared/DelayChild";
-
+import { Inspiration } from "../../shared/types";
+import "../../css/MasonryLayout/Masonry.css";
 function MasonryGallery() {
   const LIMIT = 40;
   const getInfinitInspiration = async (pageParam: number) => {
@@ -14,6 +14,12 @@ function MasonryGallery() {
       `/inspiration?page=${pageParam}&limit=${LIMIT}`
     );
     return data.data;
+  };
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
   };
   const {
     data: InfiniteData,
@@ -35,8 +41,7 @@ function MasonryGallery() {
   return (
     <>
       <ScrollTopBtn></ScrollTopBtn>
-      <div className="mainboard-container pt-8 bg-black overflow-hidden">
-        <DelayChild>
+      <div className="mainboard-container pt-8 bg-black overflow-hidden w-full">
           <InfiniteScroll
             dataLength={InfiniteData?.pages.flat().length || 0}
             next={() => {
@@ -44,25 +49,24 @@ function MasonryGallery() {
             }}
             hasMore={!!hasNextPage}
             loader={<div>Loading...</div>}
-
           >
             <div className="overflow-hidden px-2 w-full">
-              <DelayChild>
-              <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{width:"100%"}}>
+              <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="masonry-container"
+                columnClassName="masonry-column"
+              >
                 {isSuccess &&
                   InfiniteData.pages
                     .flat()
-                    .map((item, index) => (
-                      <CardImg
-                        key={index}
-                        content={item}
-                      />
+                    .map((item: Inspiration, index: number) => (
+                      <div key={index} className="masonry-item">
+                        <CardImg content={item} />
+                      </div>
                     ))}
               </Masonry>
-              </DelayChild>
             </div>
           </InfiniteScroll>
-        </DelayChild>
         {isFetchingNextPage && (
           <div className="flex justify-center mx-auto">
             <TailSpin

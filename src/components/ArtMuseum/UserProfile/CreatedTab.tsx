@@ -1,21 +1,26 @@
 import { Link, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
-import { Masonry } from "@mui/lab";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import http from "../../../axios/axios";
 import CardImg from "../../shared/CardImg";
+import Masonry from "react-masonry-css";
 
 function CreatedTab() {
   const LIMIT = 40;
   const { id: userId } = useParams();
-  const getInspirationByAuthor = async (page:number) => {
+  const getInspirationByAuthor = async (page: number) => {
     const data = await http.get(
       `/inspiration/user/${userId}?page=${page}&limit=${LIMIT}`
     );
     return data.data;
   };
-
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
   const {
     data: InspirationByAuthorData,
     fetchNextPage,
@@ -24,7 +29,7 @@ function CreatedTab() {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["infinitInspiration", userId],
-    initialPageParam:1,
+    initialPageParam: 1,
     queryFn: ({ pageParam }) => getInspirationByAuthor(pageParam),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length ? allPages.length + 1 : undefined;
@@ -51,26 +56,43 @@ function CreatedTab() {
           loader={<div>Loading...</div>}
         >
           <div className="overflow-hidden">
-              <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="masonry-container"
+              columnClassName="masonry-column"
+            >
+              {isSuccess &&
+                InspirationByAuthorData?.pages.flat().map((item, index) => (
+                  <div key={index} className="masonry-item">
+                    <CardImg content={item} />
+                  </div>
+                ))}
+            </Masonry>
+            {/* <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
                 {isSuccess && InspirationByAuthorData?.pages.flat().map((item, index) => (
                   <CardImg
                     key={index}
                     content={item}
                   />
                 ))}
-              </Masonry>
+              </Masonry> */}
           </div>
         </InfiniteScroll>
-        {isSuccess && InspirationByAuthorData?.pages.flat().length <= 0 && !isLoading && (
-          <div className="text-center text-2xl py-6">
-            Nothing to show...yet! Inspirations you create will live here.
-            <div className="mt-2">
-              <Link to={"/artMuseum/createInspiration"} className="inline-block text-xl primary-btn px-3 py-2">
-                Create
-              </Link>
+        {isSuccess &&
+          InspirationByAuthorData?.pages.flat().length <= 0 &&
+          !isLoading && (
+            <div className="text-center text-2xl py-6">
+              Nothing to show...yet! Inspirations you create will live here.
+              <div className="mt-2">
+                <Link
+                  to={"/artMuseum/createInspiration"}
+                  className="inline-block text-xl primary-btn px-3 py-2"
+                >
+                  Create
+                </Link>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </>
   );

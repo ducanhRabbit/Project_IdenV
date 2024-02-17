@@ -24,10 +24,9 @@ function CardImg({
 }: CardImgProps) {
   const { id } = useParams();
   const { currentUser } = useAppSelector((state) => state.user);
-  const queryClient = useQueryClient();
   return (
     <div>
-      <div className=" card-wrapper font-witch block text-white px-2 pb-4">
+      <div className=" card-wrapper font-witch block text-white pb-4">
         <div
           className={`relative group border-2 w-full border-grey-300 object-cover rounded-[16px] overflow-hidden `}
         >

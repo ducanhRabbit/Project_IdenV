@@ -1,23 +1,24 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment} from "react";
+import { Link } from "react-router-dom";
 
 export default function Language() {
   const languages = [
     {
       tag: "English",
-      link: "123",
+      link: "/",
     },
     {
       tag: "繁體中文",
-      link: "456",
+      link: "/",
     },
     {
       tag: "日本語",
-      link: " 789",
+      link: "/",
     },
     {
       tag: "한국어",
-      link: "8621",
+      link: "/",
     },
   ];
   return (
@@ -41,14 +42,14 @@ export default function Language() {
             return (
               <Menu.Item key={index}>
                 {({ active }) => (
-                  <a
-                    href={language.link}
+                  <Link
+                    to={language.link}
                     className={`${
                       active ? " text-[#d07491]" : "text-[#dde8f1]"
                     } w-full items-center rounded-md  text-base block text-left`}
                   >
                     {language.tag}
-                  </a>
+                  </Link>
                 )}
               </Menu.Item>
             );

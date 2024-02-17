@@ -5,7 +5,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "../../../css/Landing/Slider.css";
 function Slider() {
-  // after:content-[''] after:bg-[url('./assets/img/fea_bg_d3fcd82.webp')] after:w-full after:h-[calc(100%_-_2px)] after:top-0 after:left-0 after:bg-cover after:bg-no-repeat after:absolute
 
   const newsSlides = [
     {

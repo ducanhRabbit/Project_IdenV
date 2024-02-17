@@ -36,6 +36,7 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { AxiosResponse } from "axios";
 import SingleLinePlugin from "../components/LexicalEditor/Plugins/SingleLinePlugin";
 import EditInspirationModal from "../components/ArtMuseum/DetailArt/EditInspirationModal";
+import MasonryGallery from "../components/ArtMuseum/MasonryGallery";
 function DetailArt() {
   const { id } = useParams();
   const ref = useRef<HTMLDivElement | null>(null);
@@ -421,7 +422,7 @@ function DetailArt() {
                         to={`/artMuseum/profile/${detailData?.data.postedBy._id}`}
                       >
                         <p className="leading-none text-lg hover:underline underline-offset-4">
-                          {detailData?.data.postedBy.firstName}
+                          {detailData?.data.postedBy.userName}
                         </p>
                       </Link>
 
@@ -431,7 +432,6 @@ function DetailArt() {
                   {!isOwner &&
                     (currentUser &&
                     detailData?.data.postedBy.followers.some((item) => {
-                      console.log(item);
                       return item._id === currentUser._id;
                     }) ? (
                       <button
@@ -613,9 +613,10 @@ function DetailArt() {
         </div>
       </div>
       <div className="related-features bg-black ">
-        <h1 className=" text-6xl text-center text-white font-witch pt-10 pb-4">
+        <h1 className=" text-4xl md:text-6xl text-center text-white font-witch pt-10 pb-4">
           Related Features
         </h1>
+        <MasonryGallery></MasonryGallery>
       </div>
     </>
   );

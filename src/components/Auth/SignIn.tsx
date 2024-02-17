@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { setCurrentUser } from "../../redux/reducers/userReducer";
 import AuthNotification from "./AuthNotification";
 import { SignInForm } from "../../shared/types";
+import { convertErrorCodeToMessage } from "../shared/Util";
 
 interface SignInProps{
   setShowSignIn:React.Dispatch<React.SetStateAction<boolean>>
@@ -48,7 +49,7 @@ function SignIn({ setShowSignIn }:SignInProps) {
       localStorage.setItem("user", JSON.stringify(currentUser));
       dispatch(setCurrentUser(signIn.data));
     } catch (err:any) {
-      setError(err.code);
+      setError(convertErrorCodeToMessage(err.code));
     }
     setIsLoading(false);
   };

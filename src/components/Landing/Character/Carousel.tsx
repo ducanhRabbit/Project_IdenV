@@ -11,35 +11,31 @@ import { useAppSelector } from "../../../redux/hook";
 import useScreenSize from "../../../hook/useScreenSize";
 import { Character } from "../../../shared/types";
 import { Swiper as SwiperType } from "swiper/types";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface CarouselProps {
-  data: Character[]|undefined;
-  currentRole: string
-  setCurrentActive: React.Dispatch<React.SetStateAction<number>>
+  data: Character[] | undefined;
+  currentRole: string;
+  setCurrentActive: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Carousel({ data, currentRole,setCurrentActive}: CarouselProps) {
-  const [carouselSwiper,setCarouselSwiper] = useState<SwiperType|null>(null)
+function Carousel({ data, currentRole, setCurrentActive}: CarouselProps) {
+  const [carouselSwiper, setCarouselSwiper] = useState<SwiperType | null>(null);
   const { currentChar } = useAppSelector((state) => state.charInfo);
   const arrowRef = useRef(null);
   const dispatch = useDispatch();
   const { isMobile } = useScreenSize();
 
-  // useEffect(() => {
-  //   if(arrowRef.current){
-  //     arrowRef.current.swiper.slideTo(0);
-  //   }
-  // }, [charType]);
-  
-  useEffect(()=>{
-    if(carouselSwiper){
-      carouselSwiper.slideTo(0)
+  useEffect(() => {
+    if (carouselSwiper) {
+      carouselSwiper.slideTo(0);
     }
-  },[currentRole])
+  }, [currentRole]);
+
   return (
     <div className="carousel-container min-h-[100px] relative">
       <Swiper
-      onSwiper={setCarouselSwiper}
+        onSwiper={setCarouselSwiper}
         ref={arrowRef}
         initialSlide={0}
         loop={false}
@@ -55,21 +51,29 @@ function Carousel({ data, currentRole,setCurrentActive}: CarouselProps) {
         slideToClickedSlide={true}
       >
         {data?.map((char, index) => (
-          <SwiperSlide  key={index}>
-              <div
+          <SwiperSlide key={index}>
+            <div
               key={index}
               className={`cursor-pointer`}
               onClick={() => {
                 dispatch(getCharInfo(char));
-                setCurrentActive(index)
+                setCurrentActive(index);
               }}
             >
               <div
-                className={
-                  `${char === currentChar? currentRole === 'survival'?'!bg-[url("https://i.ibb.co/QjBmNwB/head-Img-bg-h2-51e8ff2.webp")]':'!bg-[url("https://i.ibb.co/g3SKLNh/head-Img-bg-h-a705533.webp")]' :'bg-[url("https://i.ibb.co/F35TjBx/head-Img-bg-edf860a.webp")]'} mx-auto  p-[3px] bg-no-repeat bg-center w-[70px] min-h-[64px] ease-in-out duration-500`
-                }
+                className={`${
+                  char === currentChar
+                    ? currentRole === "survival"
+                      ? '!bg-[url("https://i.ibb.co/QjBmNwB/head-Img-bg-h2-51e8ff2.webp")]'
+                      : '!bg-[url("https://i.ibb.co/g3SKLNh/head-Img-bg-h-a705533.webp")]'
+                    : 'bg-[url("https://i.ibb.co/F35TjBx/head-Img-bg-edf860a.webp")]'
+                } mx-auto  p-[3px] bg-no-repeat bg-center w-[70px] min-h-[64px] ease-in-out duration-500`}
               >
-                <img className=" mx-auto w-full " src={char.portrait} alt="" />
+                <LazyLoadImage
+                  className=" mx-auto w-full "
+                  src={char.portrait}
+                  alt=""
+                />
               </div>
               <p className="text-center text-xs mt-1 overflow-hidden text-ellipsis max-w-[70px] mx-auto">
                 {char.career}

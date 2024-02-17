@@ -307,7 +307,7 @@ function CreatePost() {
                           alt=""
                         />
                       </div>
-                      <div>{currentUser?.firstName}</div>
+                      <div>{currentUser?.userName}</div>
                     </div>
                   </div>
                   <div className="description">

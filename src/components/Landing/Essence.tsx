@@ -1,3 +1,4 @@
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import animationEffect from "../../shared/animationEffect";
 import { motion } from "framer-motion";
 function Essence() {
@@ -10,10 +11,10 @@ function Essence() {
         transition={{ duration: 0.3 }}
         className="lg:w-1/2 w-full poster relative before:content-[''] before:absolute before:w-[600px] before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:top-1/2 before:-right-[1px] before:translate-x-1/2 before:rotate-90  before:z-50"
       >
-        <img
+        <LazyLoadImage
           src="https://i.ibb.co/w4WY3QF/Essence-ss22.webp"
           className="w-full object-cover bg-right h-full"
-          alt=""
+          alt="Bai ze"
         />
       </motion.div>
       <div className="lg:w-1/2 w-full backstory flex flex-col p-10 md:p-16  bg-black/40">

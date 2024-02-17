@@ -10,7 +10,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { BsFillHouseDoorFill } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
 import { MdCreate } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../../css/ArtMuseum/GalleryHeader.css";
 import { getAuth, signOut } from "firebase/auth";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -37,6 +37,7 @@ function GalleryHeader() {
   const [activeMobileNav, setActiveMobileNav] = useState(false);
   const debounceValue = useDebounce(searchValue, 500);
   const { isMobile } = useScreenSize();
+  const navigate = useNavigate()
   const searchHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
@@ -49,6 +50,7 @@ function GalleryHeader() {
         console.log(err.message);
       });
       dispatch(setCurrentUser(null));
+      navigate('/artMuseum')
     }
   };
   const menuList: NavMenu[] = [
@@ -57,11 +59,11 @@ function GalleryHeader() {
       subMenu: [
         {
           tag: "Profile",
-          link: `/artMuseum/profile/${currentUser?._id}`
+          link: `/artMuseum/profile/${currentUser?._id}`,
         },
         {
           tag: "Edit",
-          link:`/artMuseum/editProfile`
+          link: `/artMuseum/editProfile`,
         },
       ],
     },
@@ -140,26 +142,26 @@ function GalleryHeader() {
             />
           </Link>
           <div className="flex gap-8">
-          <Link
-            to={"/artMuseum"}
-            className={`md:block hidden text-white relative text-lg after:content-[''] ${
-              location.pathname === "/artMuseum"
-                ? "after:block"
-                : "after:hidden"
-            }  after:absolute after:w-full after:p-[2px] after:bg-[#cc0000] after:bottom-0 after:rounded-full`}
-          >
-            Home
-          </Link>
-          <Link
-            to={"/artMuseum/createInspiration"}
-            className={`md:block hidden text-white relative text-lg after:content-[''] ${
-              location.pathname === "/artMuseum/createInspiration"
-                ? "after:block"
-                : "after:hidden"
-            }  after:absolute after:w-full after:p-[2px] after:bg-[#cc0000] after:bottom-0 after:rounded-full`}
-          >
-            Create
-          </Link>
+            <Link
+              to={"/artMuseum"}
+              className={`md:block hidden text-white relative text-lg after:content-[''] ${
+                location.pathname === "/artMuseum"
+                  ? "after:block"
+                  : "after:hidden"
+              }  after:absolute after:w-full after:p-[2px] after:bg-[#cc0000] after:bottom-0 after:rounded-full`}
+            >
+              Home
+            </Link>
+            <Link
+              to={"/artMuseum/createInspiration"}
+              className={`md:block hidden text-white relative text-lg after:content-[''] ${
+                location.pathname === "/artMuseum/createInspiration"
+                  ? "after:block"
+                  : "after:hidden"
+              }  after:absolute after:w-full after:p-[2px] after:bg-[#cc0000] after:bottom-0 after:rounded-full`}
+            >
+              Create
+            </Link>
           </div>
           <div className="search hidden md:block relative group/searchBox flex-1 max-w-[650px]">
             <form className="relative" onSubmit={searchHandler}>
@@ -172,38 +174,45 @@ function GalleryHeader() {
                   setSearchValue(e.target.value);
                 }}
               />
-              <Link to={`/artMuseum/search?key=${debounceValue}`} className="text-[#111] cursor-pointer absolute py-2 px-4 top-1/2 -translate-y-1/2 left-0">
+              <Link
+                to={`/artMuseum/search?key=${debounceValue}`}
+                className="text-[#111] cursor-pointer absolute py-2 px-4 top-1/2 -translate-y-1/2 left-0"
+              >
                 <BsSearch className="" size={20} />
               </Link>
             </form>
             {activeSearchBox && (
-              <div className="absolute hidden group-focus-within/searchBox:block mt-2 rounded-3xl w-full bg-white font-witch px-4 py-3 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]">
-                <div className="text-xl mb-1 pl-2">Users:</div>
-                { suggestUser.length > 0 ? (
-                  <UserSuggest suggestList={suggestUser} />
-                ) : (
-                  <div className="pl-5 w-full mb-2 ">User not found!</div>
-                )}
+              <div className="absolute h-[80vh] hidden group-focus-within/searchBox:block mt-2 rounded-3xl w-full bg-white font-witch px-4 py-3 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]">
+                <div className=" flex flex-col h-full gap-2 second-track">
+                  <div className="flex-1 min-h-0 h-full overflow-auto ">
+                    <div className="text-xl mb-1 pl-2">Users:</div>
+                    {suggestUser.length > 0 ? (
+                      <UserSuggest suggestList={suggestUser} />
+                    ) : (
+                      <div className="pl-5 w-full mb-2 ">User not found!</div>
+                    )}
 
-                <hr></hr>
-                <div className="text-xl  pl-2 mt-3 mb-1">Inspirations:</div>
-                {suggestInspiration.length > 0 ? (
-                  <InspirationSuggest suggestList={suggestInspiration} />
-                ) : (
-                  <div className="pl-5 w-full mb-2 ">
-                    Inspiration not found!
+                    <hr></hr>
+                    <div className="text-xl  pl-2 mt-3 mb-1">Inspirations:</div>
+                    {suggestInspiration.length > 0 ? (
+                      <InspirationSuggest suggestList={suggestInspiration} />
+                    ) : (
+                      <div className="pl-5 w-full mb-2 ">
+                        Inspiration not found!
+                      </div>
+                    )}
                   </div>
-                )}
-                {(suggestUser.length > 0 ||
-                  suggestInspiration.length > 0) && (
-                  <Link
-                    to={`/artMuseum/search?key=${debounceValue}`}
-                    className="py-2 block text-center cursor-pointer hover:text-[#cc0000] duration-150"
-                  >
-                    View more results{" "}
-                    <BiChevronsRight className="inline-block" size={20} />
-                  </Link>
-                )}
+                  {(suggestUser.length > 0 ||
+                    suggestInspiration.length > 0) && (
+                    <Link
+                      to={`/artMuseum/search?key=${debounceValue}`}
+                      className="py-2 text-center cursor-pointer hover:text-[#cc0000] duration-150"
+                    >
+                      View more results{" "}
+                      <BiChevronsRight className="inline-block" size={20} />
+                    </Link>
+                  )}
+                </div>
               </div>
             )}
           </div>
