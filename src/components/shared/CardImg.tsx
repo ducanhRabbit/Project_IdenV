@@ -29,7 +29,7 @@ function CardImg({ content }: CardImgProps) {
     },
   });
   return (
-    <div className=" card-wrapper font-witch block text-white px-2 pb-4">
+    <div className=" card-wrapper font-witch block text-white">
       <div
         className={`relative group border-2 w-full min-h-[100px] border-grey-300 object-cover rounded-[16px] overflow-hidden `}
       >
@@ -47,7 +47,7 @@ function CardImg({ content }: CardImgProps) {
           ></Link>
           <Link
             to={`/artMuseum/profile/${content?.postedBy._id}/created`}
-            className={` artist-info absolute left-4 top-3 max-w-[80%] gap-2 duration-500 ease-out w-full -translate-x-[80%] group-hover:translate-x-0 flex`}
+            className={` artist-info absolute left-4 top-3 max-w-[80%] gap-2 duration-500 ease-out w-full -translate-x-[80%] group-hover:translate-x-0 flex opacity-0 group-hover:opacity-100`}
           >
             <div className="avatar w-[45px] h-[45px] rounded-full border-2 border-grey-300 overflow-hidden">
               <LazyLoadImage
@@ -70,7 +70,7 @@ function CardImg({ content }: CardImgProps) {
           </Link>
           <div
             className={
-              "like-btn group/heart flex translate-y-[60px] group-hover:translate-y-0 items-center duration-300 absolute bottom-4 left-4 rounded-full p-2 hover:pr-8 bg-white/80" +
+              "like-btn cursor-pointer group/heart flex translate-y-[60px] group-hover:translate-y-0 items-center duration-300 absolute bottom-4 left-4 rounded-full p-2 hover:pr-8 bg-white/80" +
               `${
                 content.likes.some((item) => item._id === currentUser?._id)
                   ? " text-primary"
@@ -117,7 +117,7 @@ function CardImg({ content }: CardImgProps) {
             </div>
             <div className="flex flex-col">
               <div className="artist-name text-lg">
-                {content.postedBy.firstName}
+                {content.postedBy.userName}
               </div>
               <div className="followers text-base">
                 {content.postedBy.followers.length} follows

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
-import { Masonry } from "@mui/lab";
 import {
   keepPreviousData,
   useInfiniteQuery,
@@ -16,10 +15,10 @@ import SavedCard from "./SavedCard";
 import BlackBackdrop from "../../shared/BlackBackDrop";
 import { setCurrentUser } from "../../../redux/reducers/userReducer";
 import { ConfirmWarnState } from "../../../shared/types";
-import DelayChild from "../../shared/DelayChild";
+import Masonry from "react-masonry-css";
 interface SavedTab {
   sortConfig: {
-    sortBy: string
+    sortBy: string;
   };
 }
 function SavedTab({ sortConfig }: SavedTab) {
@@ -38,15 +37,22 @@ function SavedTab({ sortConfig }: SavedTab) {
 
     return data.data;
   };
-  const location = useLocation()
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
+  const location = useLocation();
   const [activeConfirmWarn, setActiveConfirmWarn] =
     useState<ConfirmWarnState | null>(null);
   const {
     data: savedData,
     fetchNextPage,
     isLoading,
+    isSuccess,
     hasNextPage,
-    refetch
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["savedPost", sortConfig],
     initialPageParam: 1,
@@ -57,9 +63,9 @@ function SavedTab({ sortConfig }: SavedTab) {
     },
     placeholderData: keepPreviousData,
   });
-  useEffect(()=>{
-    refetch()
-  },[location.pathname])
+  useEffect(() => {
+    refetch();
+  }, [location.pathname]);
   const deleteMutation = useMutation({
     mutationKey: ["deleteSaved"],
     mutationFn: (postId: string) => {
@@ -67,9 +73,7 @@ function SavedTab({ sortConfig }: SavedTab) {
       return res;
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries(
-        { queryKey: ["savedPost"] }
-      );
+      queryClient.invalidateQueries({ queryKey: ["savedPost"] });
       const user = await http.get(`user/info/${userId}`);
       dispatch(setCurrentUser(user.data));
       setActiveConfirmWarn(null);
@@ -113,7 +117,7 @@ function SavedTab({ sortConfig }: SavedTab) {
       )}
       <div>
         <div className="header flex justify-between items-center px-4">
-          <SortBy sortConfig={sortConfig}/>
+          <SortBy sortConfig={sortConfig} />
           <div className="flex items-center gap-2">
             <Link
               to={"/artMuseum/createInspiration"}
@@ -124,7 +128,7 @@ function SavedTab({ sortConfig }: SavedTab) {
           </div>
         </div>
         <div className="mainboard-container pt-8 bg-black overflow-hidden">
-          {savedData && savedData?.pages.flat().length > 0 && (
+          {isSuccess && savedData?.pages.flat().length > 0 && (
             <InfiniteScroll
               dataLength={savedData.pages.flat().length || 0}
               next={() => {
@@ -134,13 +138,21 @@ function SavedTab({ sortConfig }: SavedTab) {
               loader={<div>Loading...</div>}
             >
               <div className="overflow-hidden">
-                <DelayChild>
-                  <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{width:"100%"}}>
-                    {savedData?.pages.flat().map((item, index) => (
-                      <SavedCard content={item} key={index} setActiveConfirmWarn={setActiveConfirmWarn}/>
+                <Masonry
+                  breakpointCols={breakpointColumnsObj}
+                  className="masonry-container"
+                  columnClassName="masonry-column"
+                >
+                  {isSuccess &&
+                    savedData.pages.flat().map((item, index) => (
+                      <div className="masonry-item" key={index}>
+                        <SavedCard
+                          content={item}
+                          setActiveConfirmWarn={setActiveConfirmWarn}
+                        />
+                      </div>
                     ))}
-                  </Masonry>
-                </DelayChild>
+                </Masonry>
               </div>
             </InfiniteScroll>
           )}

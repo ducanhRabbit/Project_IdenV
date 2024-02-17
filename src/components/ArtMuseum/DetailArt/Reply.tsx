@@ -5,7 +5,6 @@ import React, { Fragment, useRef } from "react";
 import EditMenu from "./EditMenu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Picker from "@emoji-mart/react";
-// import "./EmojiPicker.css";
 import { $createTextNode, $insertNodes, LexicalEditor } from "lexical";
 import { AiOutlineSmile } from "react-icons/ai";
 import data from "@emoji-mart/data";
@@ -156,8 +155,8 @@ function Reply({
                   </div>
                 </div>
                 {showEmojiPicker.index === index && showEmojiPicker.active && (
-                  <div className="absolute right-4 z-50">
-                    <Picker onEmojiSelect={handleEmojiSelect} data={data} />
+                  <div className="absolute -right-2 md:right-4 z-50">
+                    <Picker perLine={8} onEmojiSelect={handleEmojiSelect} data={data} />
                   </div>
                 )}
               </div>

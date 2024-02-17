@@ -245,7 +245,7 @@ function CommentPost({
                   </div>
                   {showEmojiPicker.active &&
                     showEmojiPicker.type === "edit" && (
-                      <div className="absolute right-4 z-50">
+                      <div className="absolute -right-2 md:right-4 z-50">
                         <Picker
                           onEmojiSelect={(emoji: any) => {
                             if (editRef.current) {
@@ -256,6 +256,7 @@ function CommentPost({
                             }
                           }}
                           data={data}
+                          perLine={8}
                         />
                       </div>
                     )}
@@ -361,8 +362,8 @@ function CommentPost({
                   </div>
                   {showEmojiPicker.active &&
                     showEmojiPicker.type === "reply" && (
-                      <div className="absolute right-4 z-50">
-                        <Picker onEmojiSelect={handleEmojiSelect} data={data} />
+                      <div className="absolute -right-2 md:right-4 z-50">
+                        <Picker perLine={8} onEmojiSelect={handleEmojiSelect} data={data} />
                       </div>
                     )}
                 </div>

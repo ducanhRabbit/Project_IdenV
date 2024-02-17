@@ -1,0 +1,35 @@
+.masonry-container {
+    display: flex;
+    width: 100%;
+    overflow-x: auto; /*Enable horizontal scrolling*/
+    margin-bottom: 16px; /* Adjust spacing between items */
+}
+
+.masonry-item {
+    flex: 0 0 calc(25% - 16px);
+    margin: 0 8px; /* Adjust spacing between items */
+}
+
+
+.masonry-item .card-wrapper {
+    margin: 16px 0;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1200px) {
+    .masonry-item {
+        flex: 0 0 calc(33.33% - 16px);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .masonry-item {
+        flex: 0 0 calc(50% - 16px);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .masonry-item {
+        flex: 0 0 calc(100% - 16px);
+    }
+}

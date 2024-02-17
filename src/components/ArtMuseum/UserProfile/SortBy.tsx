@@ -22,7 +22,7 @@ function SortBy({ sortConfig }:SortByProps) {
     {
       id: 2,
       value: "createdAt,-1",
-      label: "Last saved to",
+      label: "Latest",
     },
   ];
   const [searchParams, setSearchParams] = useSearchParams();

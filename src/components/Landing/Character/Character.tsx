@@ -9,12 +9,13 @@ import http from "../../../axios/axios";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { useEffect, useState } from "react";
 import { Character as CharacterType } from "../../../shared/types";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 export default function Character() {
   const dispatch = useAppDispatch();
   const { screenWidth } = useScreenSize();
   const isTablet = screenWidth <= 1023;
-
   const { currentChar } = useAppSelector((state) => state.charInfo);
+  console.log(currentChar)
   const [currentRole, setCurrentRole] = useState<string>("survival");
   const [currentActive, setCurrentActive] = useState<number>(0);
   const getCharacter = async (
@@ -49,10 +50,10 @@ export default function Character() {
         </h2>
         <div className="character-content flex justify-center lg:flex-row flex-col">
           <div className="left-content w-full flex flex-col items-center  lg:w-1/2 ">
-            <img
+            <LazyLoadImage
               src={currentChar.photo}
               className=" w-full md:min-h-[1100px] md:w-[600px] md:max-h-[850px] lg:max-h-max  object-cover"
-              alt=""
+              alt=""      
             />
             {isTablet && (
               <div className="char-control">
@@ -129,7 +130,7 @@ export default function Character() {
               </button>
             </div>
             <div className="character-carousel inline-block w-[85%] mx-auto mt-6 mb-4 order-3 lg:order-2">
-              <Carousel setCurrentActive={setCurrentActive} currentRole={currentRole} data={dataCharacter} />
+              <Carousel setCurrentActive={setCurrentActive} currentRole={currentRole} data={dataCharacter}/>
             </div>
             <div className="info-char px-8 lg:px-4  order-1 lg:order-3">
               <h2
