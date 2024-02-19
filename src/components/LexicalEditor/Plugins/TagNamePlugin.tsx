@@ -21,7 +21,6 @@ function TagNamePlugin({ type }:TagNamePluginProps) {
         editor.update(() => {
           const root = $getRoot();
           const paragraph = root.getFirstChild();
-          let selection = $getSelection();
           const tagChar = '@' + currentInspiration.userName
           if(paragraph){
             const isParaEmpty = paragraph.isEmpty();
@@ -33,7 +32,7 @@ function TagNamePlugin({ type }:TagNamePluginProps) {
             paragraph.append(tagNameNode, spaceNode);
             root.append(paragraph);
             // Move text cursor to the end
-            selection = root.selectEnd()
+            root.selectEnd()
           }
         });
       }
