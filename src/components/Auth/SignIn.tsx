@@ -175,7 +175,7 @@ function SignIn({ setShowSignIn }:SignInProps) {
             }}
             className="ml-2 hover:underline hover:text-primary"
           >
-            Sign In
+            Sign Up
           </button>
         </div>
       </div>

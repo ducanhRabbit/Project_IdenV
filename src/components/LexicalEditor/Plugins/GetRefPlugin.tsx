@@ -1,7 +1,7 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { forwardRef, useEffect } from 'react'
 
-function GetRefPlugin(props:any,ref:any) {
+function GetRefPlugin(_:any,ref:any) {
   const [editor] = useLexicalComposerContext()
   useEffect(()=>{
     ref.current = editor

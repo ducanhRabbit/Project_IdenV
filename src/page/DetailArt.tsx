@@ -465,7 +465,7 @@ function DetailArt() {
                                     position: "bottom-center",
                                     autoClose: 3000,
                                     theme: "light",
-                                    hideProgressBar:true
+                                    hideProgressBar: true,
                                   }
                                 );
                               });
@@ -481,7 +481,7 @@ function DetailArt() {
                 <div className="comments pb-4  flex-1 flex flex-col ">
                   <div className="flex justify-between items-center mb-1">
                     <h1 className="title text-3xl">Comments</h1>
-                    <div className="mr-2">
+                    <div className="mr-2 cursor-pointer">
                       <HiHeart
                         onClick={() => {
                           handleLikePost();

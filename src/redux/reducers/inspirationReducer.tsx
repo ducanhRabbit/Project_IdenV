@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Inspiration, User } from '../../shared/types';
+import { User } from '../../shared/types';
 
 interface currentInspiration{
   currentInspiration: User

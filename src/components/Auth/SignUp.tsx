@@ -43,7 +43,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
           values.password
         )
       ).user;
-      const register = await http.post("user/register", {
+      await http.post("user/register", {
         firstName: values.firstName,
         lastName: values.lastName,
         userName: values.firstName + values.lastName,
@@ -238,7 +238,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
             }}
             className="underline ml-1 cursor-pointer hover:text-primary"
           >
-            Sign Up
+            Sign In
           </span>
         </div>
       </div>

@@ -14,29 +14,33 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { auth } from "../firebase/fireBase";
-import BlackBackDrop from "../components/shared/BlackBackDrop"
+import BlackBackDrop from "../components/shared/BlackBackDrop";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 function EditProfile() {
-  const [showReAuth, setShowReAuth] = useState<{[key:string]:string}|null>(null);
+  const [showReAuth, setShowReAuth] = useState<{
+    [key: string]: string;
+  } | null>(null);
   const user = auth.currentUser;
   const { currentUser } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const handleSubmitPublicForm = async (publicFormData:{[key:string]:string}) => {
+  const handleSubmitPublicForm = async (publicFormData: {
+    [key: string]: string;
+  }) => {
     try {
       const res = await http.put(`user/${currentUser._id}`, {
         ...publicFormData,
       });
-      dispatch(setCurrentUser(res.data))
-      toast.success(<span className="font-witch">Saved</span>,{
-        hideProgressBar:true,
-        theme:"colored"
+      dispatch(setCurrentUser(res.data));
+      toast.success(<span className="font-witch">Saved</span>, {
+        hideProgressBar: true,
+        theme: "colored",
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const updatePasswordHandler = (passWordData:{[key:string]:string}) => {
-    if(auth.currentUser){
+  const updatePasswordHandler = (passWordData: { [key: string]: string }) => {
+    if (auth.currentUser) {
       updatePassword(auth.currentUser, passWordData.newPassword)
         .then(() => {
           toast.success(<div className="font-witch">Password changed</div>, {
@@ -50,10 +54,9 @@ function EditProfile() {
         });
     }
   };
-  const updateEmailHandler = async (emailData:string) => {
+  const updateEmailHandler = async (emailData: string) => {
     try {
-      if(auth.currentUser){
-
+      if (auth.currentUser) {
         await http.put(`user/${currentUser._id}`, {
           email: emailData,
         });
@@ -70,7 +73,7 @@ function EditProfile() {
             console.log(err.response.data.message);
           });
       }
-    } catch (err:any) {
+    } catch (err: any) {
       if (err.response.data.message.includes("E11000")) {
         toast.error(
           <div className="error-toast font-witch text-lg">
@@ -85,10 +88,10 @@ function EditProfile() {
     }
   };
   const [isLoadingImg, setIsLoadingImg] = useState(false);
-  const changeProfileImage = async (e:ChangeEvent<HTMLInputElement>) => {
+  const changeProfileImage = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
       setIsLoadingImg(true);
-      if(e.target.files){
+      if (e.target.files) {
         const dataImg = await axios({
           method: "post",
           url: `https://api.imgbb.com/1/upload?key=c43cc945e93c5b72339395d37c97981c`,
@@ -97,7 +100,7 @@ function EditProfile() {
             "content-type": "multipart/form-data",
           },
         });
-        const editProfile = http
+        http
           .put(`user/${currentUser._id}`, {
             photo: dataImg.data.data.display_url,
           })
@@ -113,14 +116,13 @@ function EditProfile() {
             setIsLoadingImg(false);
           });
       }
-
     } catch (err) {
       console.log(err);
     }
   };
 
-  const reauthHandler = (data:{[key:string]:string}) => {
-    if(user?.email){
+  const reauthHandler = (data: { [key: string]: string }) => {
+    if (user?.email) {
       const credential = EmailAuthProvider.credential(
         user.email,
         data.oldPassword
@@ -237,99 +239,100 @@ function EditProfile() {
                   />
                 </div>
               </div>
-              {currentUser && <Formik
-                enableReinitialize={true}
-                initialValues={{
-                  firstName: currentUser?.firstName,
-                  lastName: currentUser?.lastName,
-                  userName: currentUser?.userName,
-                  story: currentUser?.story || "",
-                }}
-                validationSchema={Yup.object({
-                  firstName: Yup.string()
-                    .max(10, "Must be 10 characters or less")
-                    .required("Required"),
-                  lastName: Yup.string()
-                    .max(20, "Must be 20 characters or less")
-                    .required("Required"),
-                  userName: Yup.string()
-                    .max(30, "Must be 30 characters or less")
-                    .required("Required"),
-                })}
-                onSubmit={handleSubmitPublicForm}
-              >
-                <Form>
-                  <div className="fullName flex gap-2 my-2">
-                    <div className="firstName w-1/2">
-                      <label htmlFor="firstName" className="text-sm">
-                        First name
+              {currentUser && (
+                <Formik
+                  enableReinitialize={true}
+                  initialValues={{
+                    firstName: currentUser?.firstName,
+                    lastName: currentUser?.lastName,
+                    userName: currentUser?.userName,
+                    story: currentUser?.story || "",
+                  }}
+                  validationSchema={Yup.object({
+                    firstName: Yup.string()
+                      .max(10, "Must be 10 characters or less")
+                      .required("Required"),
+                    lastName: Yup.string()
+                      .max(20, "Must be 20 characters or less")
+                      .required("Required"),
+                    userName: Yup.string()
+                      .max(30, "Must be 30 characters or less")
+                      .required("Required"),
+                  })}
+                  onSubmit={handleSubmitPublicForm}
+                >
+                  <Form>
+                    <div className="fullName flex gap-2 my-2">
+                      <div className="firstName w-1/2">
+                        <label htmlFor="firstName" className="text-sm">
+                          First name
+                        </label>
+                        <Field
+                          className="input-form w-full py-2 px-4 "
+                          type="text"
+                          id="firstName"
+                          name="firstName"
+                          placeholder="First name"
+                        />
+                        <p className=" text-red-500 text-sm">
+                          <ErrorMessage name="firstName" />
+                        </p>
+                      </div>
+                      <div className="lastName flex-auto">
+                        <label htmlFor="lastName" className="text-sm">
+                          Last name
+                        </label>
+                        <Field
+                          className="input-form w-full py-2 px-4"
+                          type="text"
+                          id="lastName"
+                          name="lastName"
+                          placeholder="Last name"
+                        />
+                        <p className=" text-red-500 text-sm">
+                          <ErrorMessage name="lastName" />
+                        </p>
+                      </div>
+                    </div>
+                    <div className="userName my-4">
+                      <label htmlFor="userName" className="text-sm">
+                        User name
                       </label>
                       <Field
-                        className="input-form w-full py-2 px-4 "
+                        className="input-form py-2 px-4 w-full"
                         type="text"
-                        id="firstName"
-                        name="firstName"
-                        placeholder="First name"
+                        id="userName"
+                        name="userName"
+                        placeholder="Choose wisely and other can find you"
                       />
-                      <p className=" text-red-500 text-sm">
-                        <ErrorMessage name="firstName" />
-                      </p>
+                      <div className=" text-red-500 text-sm">
+                        <ErrorMessage name="userName" />
+                      </div>
                     </div>
-                    <div className="lastName flex-auto">
-                      <label htmlFor="lastName" className="text-sm">
-                        Last name
+                    <div className="about my-2">
+                      <label htmlFor="about" className="text-sm">
+                        About
                       </label>
                       <Field
-                        className="input-form w-full py-2 px-4"
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        placeholder="Last name"
-                      />
-                      <p className=" text-red-500 text-sm">
-                        <ErrorMessage name="lastName" />
-                      </p>
+                        as="textarea"
+                        className="resize-none w-full input-form py-2 px-4"
+                        name="story"
+                        id="about"
+                        rows="3"
+                        placeholder="Tell your story"
+                      ></Field>
                     </div>
-                  </div>
-                  <div className="userName my-4">
-                    <label htmlFor="userName" className="text-sm">
-                      User name
-                    </label>
-                    <Field
-                      className="input-form py-2 px-4 w-full"
-                      type="text"
-                      id="userName"
-                      name="userName"
-                      placeholder="Choose wisely and other can find you"
-                    />
-                    <div className=" text-red-500 text-sm">
-                      <ErrorMessage name="userName" />
+                    <div className="text-center">
+                      <button
+                        type="submit"
+                        className="primary-btn rounded-full bg-[#cc0000] text-white min-w-[100px] hover:bg-[#ac0000] active:scale-95 duration-75 py-2 px-4"
+                      >
+                        Save
+                      </button>
                     </div>
-                  </div>
-                  <div className="about my-2">
-                    <label htmlFor="about" className="text-sm">
-                      About
-                    </label>
-                    <Field
-                      as="textarea"
-                      className="resize-none w-full input-form py-2 px-4"
-                      name="story"
-                      id="about"
-                      rows="3"
-                      placeholder="Tell your story"
-                    ></Field>
-                  </div>
-                  <div className="text-center">
-                    <button
-                      type="submit"
-                      className="primary-btn rounded-full bg-[#cc0000] text-white min-w-[100px] hover:bg-[#ac0000] active:scale-95 duration-75 py-2 px-4"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </Form>
-              </Formik>}
-              
+                  </Form>
+                </Formik>
+              )}
             </div>
             <div className="private-form px-2">
               <div className="public-header text-center md:text-left mb-8">
@@ -341,49 +344,51 @@ function EditProfile() {
                   profile
                 </p>
               </div>
-              {currentUser && <Formik
-                initialValues={{
-                  email: currentUser.email,
-                }}
-                validationSchema={Yup.object({
-                  email: Yup.string()
-                    .email("Invalid email address")
-                    .required("Required"),
-                })}
-                onSubmit={(emailData) => {
-                  setShowReAuth({
-                    type: "email",
-                    ...emailData,
-                  });
-                }}
-                enableReinitialize={true}
-              >
-                <Form>
-                  <div className="email my-2 mb-5 relative">
-                    <label htmlFor="email" className="text-sm">
-                      Email
-                    </label>
-                    <div className="flex gap-4 ">
-                      <Field
-                        className="input-form py-2 px-4 flex-1"
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Abc@gmail.com"
-                      />
-                      <div className="absolute -bottom-5 left-0 text-red-500 text-sm">
-                        <ErrorMessage name="email" />
+              {currentUser && (
+                <Formik
+                  initialValues={{
+                    email: currentUser.email,
+                  }}
+                  validationSchema={Yup.object({
+                    email: Yup.string()
+                      .email("Invalid email address")
+                      .required("Required"),
+                  })}
+                  onSubmit={(emailData) => {
+                    setShowReAuth({
+                      type: "email",
+                      ...emailData,
+                    });
+                  }}
+                  enableReinitialize={true}
+                >
+                  <Form>
+                    <div className="email my-2 mb-5 relative">
+                      <label htmlFor="email" className="text-sm">
+                        Email
+                      </label>
+                      <div className="flex gap-4 ">
+                        <Field
+                          className="input-form py-2 px-4 flex-1"
+                          type="email"
+                          id="email"
+                          name="email"
+                          placeholder="Abc@gmail.com"
+                        />
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-sm">
+                          <ErrorMessage name="email" />
+                        </div>
+                        <button
+                          type="submit"
+                          className="py-2 px-4 block primary-btn"
+                        >
+                          Update
+                        </button>
                       </div>
-                      <button
-                        type="submit"
-                        className="py-2 px-4 block primary-btn"
-                      >
-                        Update
-                      </button>
                     </div>
-                  </div>
-                </Form>
-              </Formik>}
+                  </Form>
+                </Formik>
+              )}
               <div className="password my-2">
                 <div className="text-xl">Password Changes</div>
                 <Formik
