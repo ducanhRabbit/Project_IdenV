@@ -8,7 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Masonry from "react-masonry-css";
 import CardImg from "../components/shared/CardImg";
 function SearchPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, _setSearchParams] = useSearchParams();
   const key = searchParams.get("key");
   const LIMIT = 20;
   const getInfinitUsers = async (key: string | null, pageParam: number) => {
