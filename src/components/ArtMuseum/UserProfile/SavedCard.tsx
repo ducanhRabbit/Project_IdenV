@@ -1,6 +1,5 @@
 import { HiHeart } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { BsTrashFill } from "react-icons/bs";
 import "react-lazy-load-image-component/src/effects/blur.css";
