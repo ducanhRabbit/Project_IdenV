@@ -3,7 +3,6 @@ import {TypeEditor} from "../../../shared/types"
 import {
   $createTextNode,
   $getRoot,
-  $getSelection,
 } from "lexical";
 import { useEffect } from "react";
 import { $createTagNameNode } from "../Nodes/TagNameNode";
