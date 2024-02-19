@@ -18,7 +18,6 @@ export default function MenuModal({
   menuList,
   menuWrapperClass = "menu-wrapper",
   menuClass = "menu-item",
-  subClass = "sub-item",
 }:MenuModalProps) {
   const {currentUser} = useAppSelector(state => state.user)
   return (

@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Annoucement from "./Announcement";
 function New() {
   const ref = useRef(null);
-  const { scrollY, scrollYProgress } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: ref,
   });
   // Parallax Effect

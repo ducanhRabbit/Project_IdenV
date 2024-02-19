@@ -35,7 +35,7 @@ function CardImg({ content }: CardImgProps) {
       >
         <LazyLoadImage
           wrapperClassName="!block"
-          className="object-cover"
+          className="object-cover w-full"
           src={content.artworkURL}
           effect="blur"
           placeholder={<span className=" block h-[200px]"></span>}

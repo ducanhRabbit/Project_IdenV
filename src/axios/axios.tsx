@@ -1,7 +1,11 @@
 import axios from "axios";
 
+// const http = axios.create({
+//     baseURL: 'http://localhost:3000/api/',
+//     timeout: 6000,
+// })
 const http = axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    baseURL: 'https://identityvapi.onrender.com/api/',
     timeout: 6000,
 })
 

@@ -21,7 +21,7 @@ const signinWithGoogle = (dispatch: any, setCurrentUser: any) => {
           dispatch(setCurrentUser(signIn.data));
       } catch (err) {
         const { uid, displayName, email, photoURL } = result.user;
-        const register = await http.post("user/register", {
+        await http.post("user/register", {
           userName: displayName,
           email: email,
           photo: photoURL,
