@@ -15,7 +15,6 @@ export default function Character() {
   const { screenWidth } = useScreenSize();
   const isTablet = screenWidth <= 1023;
   const { currentChar } = useAppSelector((state) => state.charInfo);
-  console.log(currentChar)
   const [currentRole, setCurrentRole] = useState<string>("survival");
   const [currentActive, setCurrentActive] = useState<number>(0);
   const getCharacter = async (

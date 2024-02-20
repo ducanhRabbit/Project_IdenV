@@ -145,7 +145,7 @@ function Landing() {
             </div>
             <video
               className="w-screen  object-cover absolute md:aspect-video -z-10 block h-full"
-              src="./src/assets/video/IdentityV - New Storyline.mp4"
+              src="https://raw.githubusercontent.com/ducanhRabbit/Video/main/NewStoryline.mp4"
               autoPlay
               muted
               loop
