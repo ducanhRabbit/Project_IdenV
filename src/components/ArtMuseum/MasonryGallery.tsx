@@ -24,6 +24,7 @@ function MasonryGallery() {
   const {
     data: InfiniteData,
     isSuccess,
+    isLoading,
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
@@ -42,6 +43,20 @@ function MasonryGallery() {
     <>
       <ScrollTopBtn></ScrollTopBtn>
       <div className="mainboard-container pt-8 bg-black overflow-hidden w-full">
+      {isLoading && (
+          <div className="flex justify-center mx-auto">
+            <TailSpin
+              height="40"
+              width="40"
+              color="#cc0000"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
+        )}
           <InfiniteScroll
             dataLength={InfiniteData?.pages.flat().length || 0}
             next={() => {
@@ -67,20 +82,7 @@ function MasonryGallery() {
               </Masonry>
             </div>
           </InfiniteScroll>
-        {isFetchingNextPage && (
-          <div className="flex justify-center mx-auto">
-            <TailSpin
-              height="40"
-              width="40"
-              color="#cc0000"
-              ariaLabel="tail-spin-loading"
-              radius="1"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-            />
-          </div>
-        )}
+        
       </div>
     </>
   );
