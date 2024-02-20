@@ -83,7 +83,7 @@ function MasonryGallery() {
           </div>
         </InfiniteScroll>}
         {
-          isError && <div className="text-white">Something weird happend</div>
+          isError && <div className="text-white text-2xl">Something weird happend</div>
         }
       </div>
     </>
