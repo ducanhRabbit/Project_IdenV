@@ -15,6 +15,7 @@ function Essence() {
           src="https://i.ibb.co/w4WY3QF/Essence-ss22.webp"
           className="w-full object-cover bg-right h-full"
           alt="Bai ze"
+
         />
       </motion.div>
       <div className="lg:w-1/2 w-full backstory flex flex-col p-10 md:p-16  bg-black/40">

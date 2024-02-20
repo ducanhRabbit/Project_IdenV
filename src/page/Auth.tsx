@@ -8,7 +8,7 @@ function Auth() {
     <>
       <video
         className="w-screen object-cover fixed top-0 md:aspect-video -z-10 block h-screen"
-        src="./src/assets/video/IdentityV - signet.mp4"
+        src="https://raw.githubusercontent.com/ducanhRabbit/Video/main/Signet.mp4"
         autoPlay
         muted
         loop

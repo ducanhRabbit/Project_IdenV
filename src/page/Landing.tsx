@@ -145,7 +145,7 @@ function Landing() {
             </div>
             <video
               className="w-screen  object-cover absolute md:aspect-video -z-10 block h-full"
-              src="./src/assets/video/IdentityV - New Storyline.mp4"
+              src="https://raw.githubusercontent.com/ducanhRabbit/Video/main/NewStoryline.mp4"
               autoPlay
               muted
               loop
@@ -201,7 +201,7 @@ function Landing() {
                     >
                       <video
                         className=" absolute w-full md:w-[70%] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2  aspect-video z-50 block"
-                        src="../src/assets/video/IdentityV - New Storyline.mp4"
+                        src="https://raw.githubusercontent.com/ducanhRabbit/Video/main/NewStoryline.mp4"
                         controls
                       ></video>
                     </BlackBackdrop>

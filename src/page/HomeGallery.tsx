@@ -4,7 +4,7 @@ import MasonryGallery from "../components/ArtMuseum/MasonryGallery";
 function HomeGallery() {
   
   return (
-    <>
+    <div className="bg-black">
       <ToastContainer></ToastContainer>
       <div className='gallery-bg w-full h-screen bg-[url("https://i.ibb.co/hW7HvgL/2233514.jpg")] bg-gallery70 sm:bg-gallery45 lg:bg-galleryTopCent bg-cover'>
         <div className="relative overlay fadeToBottom w-full h-screen"></div>
@@ -15,7 +15,7 @@ function HomeGallery() {
         </h3>
       </div>
       <MasonryGallery/>
-    </>
+    </div>
   );
 }
 

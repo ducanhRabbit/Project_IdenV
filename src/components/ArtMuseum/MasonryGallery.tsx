@@ -24,8 +24,9 @@ function MasonryGallery() {
   const {
     data: InfiniteData,
     isSuccess,
+    isLoading,
+    isError,
     fetchNextPage,
-    isFetchingNextPage,
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["infinitInspiration"],
@@ -42,32 +43,7 @@ function MasonryGallery() {
     <>
       <ScrollTopBtn></ScrollTopBtn>
       <div className="mainboard-container pt-8 bg-black overflow-hidden w-full">
-          <InfiniteScroll
-            dataLength={InfiniteData?.pages.flat().length || 0}
-            next={() => {
-              fetchNextPage();
-            }}
-            hasMore={!!hasNextPage}
-            loader={<div>Loading...</div>}
-          >
-            <div className="overflow-hidden px-2 w-full">
-              <Masonry
-                breakpointCols={breakpointColumnsObj}
-                className="masonry-container"
-                columnClassName="masonry-column"
-              >
-                {isSuccess &&
-                  InfiniteData.pages
-                    .flat()
-                    .map((item: Inspiration, index: number) => (
-                      <div key={index} className="masonry-item">
-                        <CardImg content={item} />
-                      </div>
-                    ))}
-              </Masonry>
-            </div>
-          </InfiniteScroll>
-        {isFetchingNextPage && (
+        {isLoading && (
           <div className="flex justify-center mx-auto">
             <TailSpin
               height="40"
@@ -81,6 +57,34 @@ function MasonryGallery() {
             />
           </div>
         )}
+        {isSuccess && <InfiniteScroll
+          dataLength={InfiniteData?.pages.flat().length || 0}
+          next={() => {
+            fetchNextPage();
+          }}
+          hasMore={!!hasNextPage}
+          loader={<div>Loading...</div>}
+        >
+          <div className="overflow-hidden px-2 w-full">
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="masonry-container"
+              columnClassName="masonry-column"
+            >
+              {isSuccess &&
+                InfiniteData.pages
+                  .flat()
+                  .map((item: Inspiration, index: number) => (
+                    <div key={index} className="masonry-item">
+                      <CardImg content={item} />
+                    </div>
+                  ))}
+            </Masonry>
+          </div>
+        </InfiniteScroll>}
+        {
+          isError && <div className="text-white text-2xl">Something weird happend</div>
+        }
       </div>
     </>
   );

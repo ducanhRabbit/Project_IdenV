@@ -83,7 +83,7 @@ function SignUp({ setShowSignIn }: SignUpProps) {
           />
         </div>
       )}
-      <div className="absolute px-4 py-8 font-witch  text-white top-1/2 -translate-y-1/2 w-full max-w-xl left-1/2 -translate-x-1/2">
+      <div className="absolute px-4 py-8 font-witch bg-black  text-white top-1/2 -translate-y-1/2 w-full max-w-xl left-1/2 -translate-x-1/2">
         <div className="flex flex-col items-center mb-4">
           <h1 className="text-6xl text-center mb-4">
             Sign up to Identity <span className="text-primary">V</span>{" "}
