@@ -170,19 +170,19 @@ export default function Character() {
                   <div className="settings-info text-lg">
                     <ul>
                       <li className="leading-9">
-                        <span className="text-grey-100">Character day:</span>{" "}
+                        <span className="text-grey-200/80">Character day:</span>{" "}
                         {currentChar.birth}
                       </li>
                       <li className="leading-9">
-                        <span className="text-grey-100">Interests:</span>{" "}
+                        <span className="text-grey-200/80">Interests:</span>{" "}
                         {currentChar.interests}
                       </li>
                       <li className="leading-9">
-                        <span className="text-grey-100">Talent:</span>{" "}
+                        <span className="text-grey-200/80">Talent:</span>{" "}
                         {currentChar.talents}
                       </li>
                       <li className="leading-9">
-                        <span className="text-grey-100">Likes:</span>{" "}
+                        <span className="text-grey-200/80">Likes:</span>{" "}
                         {currentChar.likes}
                       </li>
                     </ul>

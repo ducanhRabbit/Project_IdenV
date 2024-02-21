@@ -9,7 +9,6 @@ const signinWithGoogle = (dispatch: any, setCurrentUser: any) => {
     .then(async (result) => {
       try {
         const { uid } = result.user;
-
         const signIn = await http.post("user/login", {
           uid: uid,
         });
