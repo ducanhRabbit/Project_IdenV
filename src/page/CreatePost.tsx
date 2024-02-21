@@ -208,6 +208,7 @@ function CreatePost() {
                   <input
                     type="file"
                     className="hidden"
+                    accept="image/*"
                     id="upload-img"
                     onChange={postImage}
                     ref={imageRef}

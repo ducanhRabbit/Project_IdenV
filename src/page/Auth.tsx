@@ -5,9 +5,9 @@ import SignUp from "../components/Auth/SignUp";
 function Auth() {
   const [showSignin, setShowSignin] = useState(true);
   return (
-    <>
+    <div className="bg-black">
       <video
-        className="w-screen object-cover fixed top-0 md:aspect-video -z-10 block h-screen"
+        className="w-screen object-cover fixed top-0 md:aspect-video block h-screen"
         src="https://raw.githubusercontent.com/ducanhRabbit/Video/main/Signet.mp4"
         autoPlay
         muted
@@ -21,7 +21,7 @@ function Auth() {
           <SignUp setShowSignIn={setShowSignin} />
         )}
       </div>
-    </>
+    </div>
   );
 }
 

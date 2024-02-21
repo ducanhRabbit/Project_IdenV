@@ -41,19 +41,19 @@ function Landing() {
   const navList = [
     {
       tag: "Home",
-      link: "/",
+      link: "#home",
     },
     {
       tag: "News",
-      link: "/",
+      link: "#news",
     },
     {
       tag: "Characters",
-      link: "/",
+      link: "#characters",
     },
     {
       tag: "Features",
-      link: "/",
+      link: "#features",
     },
     {
       tag: "Art Museum",
@@ -224,16 +224,16 @@ function Landing() {
             />
           </div>
         </section>
-        <section className="overflow-hidden relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0 before:z-50">
+        <section id="news" className="overflow-hidden relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0 before:z-50">
           <New />
         </section>
         <section className="essence relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0 before:z-20">
           <Essence />
         </section>
-        <section className="character relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0">
+        <section id="characters" className="character relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0">
           <Character />
         </section>
-        <section className="feature relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0 before:z-50">
+        <section id="features" className="feature relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0 before:z-50">
           <Features />
         </section>
         <section className="others relative before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-[url('https://i.ibb.co/PczTDMk/news-line-5e945cc.webp')] before:bottom-0">
