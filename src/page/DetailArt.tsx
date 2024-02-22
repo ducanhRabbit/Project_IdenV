@@ -46,6 +46,7 @@ function DetailArt() {
     active: false,
     type: "",
   });
+  console.log(height)
   const { currentUser } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const { isMobile } = useScreenSize();
@@ -84,6 +85,7 @@ function DetailArt() {
     if (commentAreaRef.current) {
       commentAreaRef.current.scrollTop = commentAreaRef.current.scrollHeight;
     }
+    console.log('test')
   }, [detailData, location.pathname]);
   const [activeEdit, setActiveEdit] = useState(false);
   const [activeDelete, setActiveDelete] = useState(false);
@@ -477,7 +479,7 @@ function DetailArt() {
                     ))}
                 </div>
 
-                <div className="comments pb-4  flex-1 flex flex-col ">
+                <div className="comments pb-4  flex-1 flex flex-col min-h-0">
                   <div className="flex justify-between items-center mb-1">
                     <h1 className="title text-3xl">Comments</h1>
                     <div className="mr-2 cursor-pointer">
@@ -498,7 +500,7 @@ function DetailArt() {
                   </div>
                   <div
                     ref={commentAreaRef}
-                    className="comment-area flex-1 max-h-[calc(100%_-_40px)] overflow-y-auto scrollbar-thin scrollbar-thumb-[#585858] scrollbar-track-[#ebebeb] scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                    className={`comment-area flex-1  overflow-y-auto scrollbar-thin scrollbar-thumb-[#585858] scrollbar-track-[#ebebeb] scrollbar-thumb-rounded-full scrollbar-track-rounded-full`}
                   >
                     {detailData?.data.comments.length
                       ? detailData?.data?.comments.map((item, index) => (
@@ -565,7 +567,7 @@ function DetailArt() {
                             }}
                           >
                             <AiOutlineSmile
-                              className="cursor-pointer text-[#cc0000]/70"
+                              className="cursor-pointer text-primary/70"
                               size={25}
                             />
                           </span>
@@ -598,7 +600,7 @@ function DetailArt() {
                       }}
                       className={`cursor-pointer rounded-full p-2 ${
                         detailData?.data.commentPermission
-                          ? "text-[#cc0000]/70 hover:bg-[#d7d6d6] active:bg-[#d9d9d9]"
+                          ? "text-primary/70 hover:bg-[#d7d6d6] active:bg-[#d9d9d9]"
                           : "text-[#d4d4d4]"
                       }    `}
                     >
