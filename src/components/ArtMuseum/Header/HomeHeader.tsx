@@ -186,7 +186,7 @@ function GalleryHeader() {
                 <div className=" flex flex-col h-full gap-2 second-track">
                   <div className="flex-1 min-h-0 h-full overflow-auto ">
                     <div className="text-xl mb-1 pl-2">Users:</div>
-                    {suggestUser.length > 0 ? (
+                    {suggestUser?.length > 0 ? (
                       <UserSuggest suggestList={suggestUser} />
                     ) : (
                       <div className="pl-5 w-full mb-2 ">User not found!</div>
@@ -194,7 +194,7 @@ function GalleryHeader() {
 
                     <hr></hr>
                     <div className="text-xl  pl-2 mt-3 mb-1">Inspirations:</div>
-                    {suggestInspiration.length > 0 ? (
+                    {suggestInspiration?.length > 0 ? (
                       <InspirationSuggest suggestList={suggestInspiration} />
                     ) : (
                       <div className="pl-5 w-full mb-2 ">
@@ -202,8 +202,8 @@ function GalleryHeader() {
                       </div>
                     )}
                   </div>
-                  {(suggestUser.length > 0 ||
-                    suggestInspiration.length > 0) && (
+                  {(suggestUser?.length > 0 ||
+                    suggestInspiration?.length > 0) && (
                     <Link
                       to={`/artMuseum/search?key=${debounceValue}`}
                       className="py-2 text-center cursor-pointer hover:text-[#cc0000] duration-150"
